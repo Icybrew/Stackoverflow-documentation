@@ -9,10 +9,13 @@ class Controller {
     }
 
     protected function view($view, $data = null) {
-        $viewPath = '../resources/views/' . $view . '.php';
+        $view = $view . '.php';
+        $viewPath = '../resources/views/' . $view;
+        $twigLoader = new \Twig\Loader\FilesystemLoader('../resources/views');
+        $twig = new \Twig\Environment($twigLoader);
 
         if (file_exists($viewPath)) {
-            require_once($viewPath);
+            $twig->display($view, $data);
         } else {
             throw new \Error("View '$viewPath' not found");
         }
