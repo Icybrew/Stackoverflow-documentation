@@ -11,9 +11,10 @@
 │   │   ├── App.php
 │   │   ├── Config.php
 │   │   ├── Data.php
+│   │   ├── DB.php
 │   │   ├── Model.php
 │   │   └── Route.php
-│   └── Examples.php
+│   └── ***.php
 │
 ├── config
 │   ├── _database.php
