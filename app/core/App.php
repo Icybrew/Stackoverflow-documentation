@@ -2,42 +2,39 @@
 
 namespace App\Core;
 
-use App\Controllers;
-
 class App {
 
-    public $current_controller = null;
+    private $current_controller = null;
 
     public function __construct()
     {
-        // Initialising route
-        $route = new Route();
+        // Initialising router
+        $router = new Router();
 
-        // Getting current routes controller name
-        $className = "App\\Controllers\\" . $route->currentRoute["controller"];
+        // Getting route controller name
+        $className = "App\\Controllers\\" . $router->getRoute()->getController();
 
-        // Getting current routes controller method name
-        $functionName = $route->currentRoute["function"];
+        // Getting route function name
+        $functionName = $router->getRoute()->getFunction();
 
-        // Checking if route was found
-        if ($route->currentRoute) {
+        // Checking if route controller class autoloaded
+        if (class_exists($className)) {
 
-            // Checking if current route controller class described in routes.php ( Autoloaded )
-            if (class_exists($className)) {
-                $this->current_controller = new $className;
+            // Initialising controller
+            $this->current_controller = new $className();
 
-                if (method_exists($this->current_controller, $functionName)) {
-                    $this->current_controller->$functionName();
-                } else {
-                    throw new \Error("Method: $functionName in $className not found!");
-                }
+            // Checking if route controller contains function
+            if (method_exists($this->current_controller, $functionName)) {
+
+                // Calling route function with parameters
+                call_user_func_array([$this->current_controller, $functionName], $router->getRoute()->getParameterValues());
 
             } else {
-                throw new \Error("Class: $className not found!");
+                throw new \Error("Method: $functionName in $className not found!");
             }
 
         } else {
-            ($this->current_controller = new Controllers\ErrorController())->index();
+            throw new \Error("Class: $className not found!");
         }
     }
 }
