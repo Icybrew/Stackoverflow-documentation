@@ -4,9 +4,10 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "App\\Core\\": "app\\core",
             "App\\": "app",
-            "App\\Controllers\\": "app\\controllers"
+            "App\\Controllers\\": "app\\controllers",
+            "App\\Core\\": "app\\core",
+            "App\\Core\\libs\\": "app\\core\\lib"
         }
     },
     "require": {
