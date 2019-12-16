@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" >
-
 <head>
 
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
 
     <title>PAGE NOT FOUND!</title>
-
-
-
-
 
     <style>
         @import url('https://fonts.googleapis.com/css?family=Fira+Mono:400');
@@ -20,13 +15,13 @@
         body{
             display: flex;
             width: 100vw;
-            height: 100vh;
+            height: 90vh;
             align-items: center;
             justify-content: center;
             margin: 0;
             background: #131313;
             color: #fff;
-            font-size: 96px;
+            font-size: 100px;
             font-family: 'Fira Mono', monospace;
             letter-spacing: -7px;
         }
@@ -90,12 +85,9 @@
             }
         }
     </style>
-
     <script>
         window.console = window.console || function(t) {};
     </script>
-
-
 
     <script>
         if (document.location.search.match(/type=embed/gi)) {
@@ -103,18 +95,14 @@
         }
     </script>
 
-
 </head>
-
-<body translate="no" >
-<div title="404">404. PAGE NOT FOUND</div>
-
-
-
-
-
-
+<body>
+<div class="container">
+<!--Go back button-->
+<button class="btn btn-outline-success my-2 my-sm-0 btn-lg" onclick="history.go(-1);"> >Back </button>
+    <!--Error message-->
+<div title="404" translate="no">404. PAGE NOT FOUND</div>
+</div>
 </body>
-
 </html>
 
