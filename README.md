@@ -8,12 +8,16 @@
 │   │   └── ***Controller.php
 │   │
 │   ├── core
+│   │   │   libs
+│   │   │   ├── Route.php
+│   │   │   └── URL.php
+│   │   │
 │   │   ├── App.php
 │   │   ├── Config.php
 │   │   ├── Data.php
 │   │   ├── DB.php
 │   │   ├── Model.php
-│   │   └── Route.php
+│   │   └── Router.php
 │   └── ***.php
 │
 ├── config
