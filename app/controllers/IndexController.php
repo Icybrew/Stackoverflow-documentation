@@ -14,7 +14,7 @@ class indexController extends Controller {
 
     public function index() {
         $topics = (DB::queryObject("SELECT * FROM topics LIMIT 10"));
-        $this->view('index', ["topics" => $topics]);
+        $this->view('index', ["topics" => $topics, "title" => Config::get('config', 'name')]);
     }
 
 }
