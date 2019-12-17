@@ -8,8 +8,8 @@ class Controller {
         // Base controller
     }
 
-    protected function view($view, $data = null) {
-        $view = $view . '.php';
+    protected function view($view, $data = []) {
+        $view = $view . '.php.twig';
         $viewPath = '../resources/views/' . $view;
         $twigLoader = new \Twig\Loader\FilesystemLoader('../resources/views');
         $twig = new \Twig\Environment($twigLoader);

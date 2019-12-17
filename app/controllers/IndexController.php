@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Core\Config;
+use App\Core\DB;
 
 class indexController extends Controller {
 
@@ -12,7 +13,9 @@ class indexController extends Controller {
     }
 
     public function index() {
-        $this->view('index', ["title" => Config::get("config", 'name')]);
+        $topics = (DB::queryObject("SELECT * FROM topics LIMIT 10"));
+        //var_dump($topics);
+        $this->view('index', ["topics" => $topics]);
     }
 
 }
