@@ -1,0 +1,30 @@
+{% extends "template.php.twig" %}
+
+{% block content %}
+<table class="table">
+        <thead>
+
+            <tr>
+                <th scope="col">Nr</th>
+                <th scope="col">Title</th>
+                <th scope="col">Creation Date</th>
+                <th scope="col">Last Edit Date</th>
+                <th scope="col">More</th>
+            </tr>
+
+
+        </thead>
+        <tbody>
+        {% for topic in topics %}
+        <tr>
+            <th scope="row">{{ topic.Id }}</th>
+            <td>{{ topic.Title }}</td>
+            <td>{{ topic.CreationDate }}</td>
+            <td>{{ topic.LastEditDate }}</td>
+            <td <button class="btn btn-outline-success btn-sm" type="submit" id="view">view</button></td>
+        </tr>
+        {% endfor %}
+        <tr><td></td><td></td><td></td><td></td></tr> <!-- A gap after the last table's record-->
+        </tbody>
+    </table>
+{% endblock %}
