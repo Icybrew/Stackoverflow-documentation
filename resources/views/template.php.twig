@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <!-- Defaults -->
         <title> {{ title }}</title>
-        <!--style for the error page -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+        <!-- Javascript -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" defer></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" defer></script>
+
         <style>
             @import url('https://fonts.googleapis.com/css?family=Fira+Mono:400');
 
@@ -25,35 +30,43 @@
                 font-size: 100px;
                 font-family: 'Fira Mono', monospace;
                 letter-spacing: -7px;
+                overflow: hidden;
             }
 
-            .error-wrapper div{
+            .error-wrapper div {
                 animation: glitch 1s linear infinite;
             }
 
-            @keyframes glitch{
-                2%,64%{
-                    transform: translate(2px,0) skew(0deg);
-                }
-                4%,60%{
-                    transform: translate(-2px,0) skew(0deg);
-                }
-                62%{
-                    transform: translate(0,0) skew(5deg);
-                }
-            }
-
             .error-wrapper div:before,
-            .error-wrapper div:after{
+            .error-wrapper div:after {
                 content: attr(title);
                 position: absolute;
                 left: 0;
             }
 
-            .error-wrapper div:before{
+            .error-wrapper div:before {
                 animation: glitchTop 1s linear infinite;
                 clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
                 -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+            }
+
+
+            .error-wrapper div:after{
+                animation: glitchBottom 1.5s linear infinite;
+                clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+                -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+            }
+
+            @keyframes glitch {
+                2%,64% {
+                    transform: translate(2px,0) skew(0deg);
+                }
+                4%,60% {
+                    transform: translate(-2px,0) skew(0deg);
+                }
+                62% {
+                    transform: translate(0,0) skew(5deg);
+                }
             }
 
             @keyframes glitchTop{
@@ -68,13 +81,7 @@
                 }
             }
 
-            .error-wrapper div:after{
-                animation: glitchBotom 1.5s linear infinite;
-                clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
-                -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
-            }
-
-            @keyframes glitchBotom{
+            @keyframes glitchBottom{
                 2%,64%{
                     transform: translate(-2px,0);
                 }
@@ -86,21 +93,8 @@
                 }
             }
         </style>
-        <script>
-            window.console = window.console || function(t) {};
-        </script>
-
-        <script>
-            if (document.location.search.match(/type=embed/gi)) {
-                window.parent.postMessage("resize", "*");
-            }
-        </script>
-
-
     </head>
     <body>
-        <!-- Content field-->
-        {% block content %}
-        {% endblock %}
+        {% block content %}{% endblock %}
     </body>
 </html>
