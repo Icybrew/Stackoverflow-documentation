@@ -19,4 +19,3 @@ class TopicController extends controller {
     }
 
     }
-}
