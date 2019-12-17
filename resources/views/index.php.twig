@@ -1,6 +1,8 @@
 {% extends "template.php.twig" %}
 
 {% block content %}
+    <div class="container">
+    {{ include('components/navbar.html.twig') }}
 <table class="table">
         <thead>
 
@@ -21,10 +23,14 @@
             <td>{{ topic.Title }}</td>
             <td>{{ topic.CreationDate }}</td>
             <td>{{ topic.LastEditDate }}</td>
-            <td <button class="btn btn-outline-success btn-sm" type="submit" id="view">view</button></td>
+            <td> <button class="btn btn-outline-success btn-sm" id="view">view</button></td>
         </tr>
         {% endfor %}
-        <tr><td></td><td></td><td></td><td></td></tr> <!-- A gap after the last table's record-->
+        <tr><td></td><td></td><td></td><td></td><td></td></tr> <!-- A gap after the last table's record-->
         </tbody>
     </table>
+    <div class="footer navbar-fixed-bottom">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="create">Create</button>
+    </div>
+    </div>
 {% endblock %}
