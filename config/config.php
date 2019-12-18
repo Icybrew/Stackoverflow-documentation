@@ -3,6 +3,7 @@
 namespace App\config;
 
 return [
-    "name" => "Sackoverflow documentation"
+    "name" => "Sackoverflow documentation",
+    'root' => '/Stackoverflow-documentation/public/'
 ];
 
