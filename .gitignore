@@ -1,7 +1,14 @@
+/* IDE */
 .idea
+
+/* Composer */
 vendor
-config/database.php
+
+/* Node */
 node_modules
 package-lock.json
+
+/* App */
+config/database.php
 public/css
 public/js
