@@ -1,3 +1,7 @@
 .idea
 vendor
-config/database.php
+config/database.phpgit
+node_modules
+package-lock.json
+public/css
+public/js
