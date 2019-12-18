@@ -1,5 +1,5 @@
 {
-  "name": "testbench",
+  "name": "Stackoverflow documentation search engine",
   "version": "1.0.0",
   "description": "For testing",
   "main": "index.js",
