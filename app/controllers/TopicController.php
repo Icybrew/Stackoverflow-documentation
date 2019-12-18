@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use http\Env\Request;
+
 class TopicController extends controller {
 
     public function show($id) {
@@ -15,4 +17,5 @@ class TopicController extends controller {
     public function update($id) {
         echo "Topic update - $id";
     }
-}
+
+    }
