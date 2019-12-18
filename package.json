@@ -1,7 +1,7 @@
 {
-  "name": "Stackoverflow documentation search engine",
+  "name": "Stackoverflow-documentation",
   "version": "1.0.0",
-  "description": "For testing",
+  "description": "Stackoverflow documentation search engine",
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
