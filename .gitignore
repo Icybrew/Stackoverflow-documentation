@@ -1,6 +1,6 @@
 .idea
 vendor
-config/database.phpgit
+config/database.php
 node_modules
 package-lock.json
 public/css
