@@ -1,25 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <title> {{ title }}</title>
-</head>
-<body>
-<div class="container">
-    {{ include('components/navbar.html.twig') }}
-    <!-- Content field for the content-->
-    {% block content %}
-    {% endblock %}
-    <!-- Footer -->
-    <div class="footer navbar-fixed-bottom">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="create">Create</button>
-    </div>
-</div>
-</body>
+    <head>
+        <!-- Defaults -->
+        <title> {{ title }}</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+        <!-- Javascript -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" defer></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" defer></script>
+
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Fira+Mono:400');
+
+            .error-wrapper {
+                display: flex;
+                width: 100vw;
+                height: 100vh;
+                align-items: center;
+                justify-content: center;
+                margin: 0;
+                background: #131313;
+                color: #fff;
+                font-size: 100px;
+                font-family: 'Fira Mono', monospace;
+                letter-spacing: -7px;
+                overflow: hidden;
+            }
+
+            .error-wrapper div {
+                animation: glitch 1s linear infinite;
+            }
+
+            .error-wrapper div:before,
+            .error-wrapper div:after {
+                content: attr(title);
+                position: absolute;
+                left: 0;
+            }
+
+            .error-wrapper div:before {
+                animation: glitchTop 1s linear infinite;
+                clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+                -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+            }
+
+
+            .error-wrapper div:after{
+                animation: glitchBottom 1.5s linear infinite;
+                clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+                -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+            }
+
+            @keyframes glitch {
+                2%,64% {
+                    transform: translate(2px,0) skew(0deg);
+                }
+                4%,60% {
+                    transform: translate(-2px,0) skew(0deg);
+                }
+                62% {
+                    transform: translate(0,0) skew(5deg);
+                }
+            }
+
+            @keyframes glitchTop{
+                2%,64%{
+                    transform: translate(2px,-2px);
+                }
+                4%,60%{
+                    transform: translate(-2px,2px);
+                }
+                62%{
+                    transform: translate(13px,-1px) skew(-13deg);
+                }
+            }
+
+            @keyframes glitchBottom{
+                2%,64%{
+                    transform: translate(-2px,0);
+                }
+                4%,60%{
+                    transform: translate(-2px,0);
+                }
+                62%{
+                    transform: translate(-22px,5px) skew(21deg);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
 </html>
