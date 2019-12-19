@@ -1,0 +1,33 @@
+{% extends "template.php.twig" %}
+
+{% block content %}
+    <div class="container">
+
+        <!-- Topic Edit Form -->
+        <form class="mt-5" method="post" action="../{{ topic.Id }}">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" name="topicTitle" value="{{ topic.Title }}">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="DocTag">DogTags</label>
+                </div>
+                <select class="custom-select" id="DocTag" name="topicDocTag">
+                    {% for docTag in docTags %}
+                        <option {{topic.DocTagId == docTag.Id ? 'class="font-weight-bold" selected' : ''}} value="{{ docTag.Id }}">
+                            {{ docTag.Title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="HtmlRemarks">HtmlRemarks:</label>
+                <textarea rows="15" class="form-control" id="HtmlRemarks" name="RemarksHtml">{{ topic.RemarksHtml }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-warning">Submit Changes</button>
+        </form>
+
+    </div>
+{% endblock %}
