@@ -2,8 +2,8 @@
 
 namespace App\Core;
 
-use App\Core\libs\Route;
-use App\Core\libs\URL;
+use App\Core\Libs\Route;
+use App\Core\Libs\URL;
 
 class Router {
     private static $_ROUTES = [];
