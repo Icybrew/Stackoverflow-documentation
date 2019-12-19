@@ -7,7 +7,8 @@
             "App\\": "app",
             "App\\Controllers\\": "app\\controllers",
             "App\\Core\\": "app\\core",
-            "App\\Core\\libs\\": "app\\core\\lib"
+            "App\\Core\\Libs\\": "app\\core\\lib",
+            "App\\Core\\Libs\\Database\\": "app\\core\\lib\\database"
         }
     },
     "require": {

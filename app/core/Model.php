@@ -4,7 +4,7 @@ namespace App\Core;
 
 use PDO;
 
-abstract class Model extends DB
+abstract class Model
 {
     protected static $table;
 
@@ -15,7 +15,7 @@ abstract class Model extends DB
         // Base Model
     }
 
-    private static function getTable() {
+    public static function getTable() {
         return (static::$table != null) ? static::$table : (new \ReflectionClass(get_called_class()))->getShortName();
     }
 
@@ -23,16 +23,23 @@ abstract class Model extends DB
         return (static::$primary_key) ? static::$primary_key : self::$primary_key;
     }
 
-    public static function find($id) {
-        $table = self::getTable();
-        $key = self::getPrimaryKey();
-        $result = self::queryObject("SELECT * FROM $table WHERE $key = $id");
-        return $result;
+    private static function createBuilder($table) {
+        return DB::table($table);
     }
 
-    public static function where($column, $value) {
-        $table = self::getTable();
-        $result = self::queryObject("SELECT * FROM $table WHERE $column = '$value'");
-        return $result;
+    public static function find($id) {
+        return self::createBuilder(self::getTable())->find($id);
+    }
+
+    public static function select($fields) {
+        return self::createBuilder(self::getTable())->select($fields);
+    }
+
+    public static function where($where, $op = null, $val = null, $type = '', $andOr = 'AND') {
+        return self::createBuilder(self::getTable())->select($where, $op, $val, $type, $andOr);
+    }
+
+    public function all($type = null, $argument = null) {
+        return self::createBuilder(self::getTable())->getAll($type, $argument);
     }
 }

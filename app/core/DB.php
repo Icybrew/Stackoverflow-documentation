@@ -2,15 +2,37 @@
 
 namespace App\Core;
 
+use App\Core\Libs\Database\QueryBuilder;
 use PDO;
 
 class DB {
+
+    private static $self;
 
     private static $_PDO;
     private static $_CONNECTED = false;
 
     private static $_QUERY;
     public static $ERROR;
+
+    private function __construct() {
+        // DB Construct
+    }
+
+    private function __clone() {}
+    private function __sleep() {}
+    private function __wakeup() {}
+
+    private static function create() {
+        return self::$self ?? self::$self = new self();
+    }
+
+    public static function table($table)
+    {
+        self::connect();
+        return (new QueryBuilder(self::$_PDO))->from($table);
+    }
+
 
     private static function connect() {
         if (self::$_CONNECTED) return;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\libs;
+namespace App\Core\Libs;
 
 class Route {
     private $method;
