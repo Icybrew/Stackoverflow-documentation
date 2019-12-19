@@ -3,6 +3,7 @@
 namespace App\Core\Libs;
 
 class Route {
+    private $name = null;
     private $method;
     private $url;
     private $controller;
@@ -22,6 +23,16 @@ class Route {
         foreach ($this->params as &$param) {
             $param['value'] = $url->getParam($param['index']);
         }
+    }
+
+    public function name($name) {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 
     public function getMethod()
@@ -51,6 +62,18 @@ class Route {
             $values[] = $parameter['value'];
         }
         return $values;
+    }
+
+    public function getUrlProcessed($params = []) {
+        $url = $this->url;
+        foreach ($params as $name => $value) {
+            $url = preg_replace('#\{' . $name . '\}#', $value, $url);
+        }
+
+        $url = ltrim($url, '/');
+
+
+        return $url;
     }
 
     public function compareTo($other) {
