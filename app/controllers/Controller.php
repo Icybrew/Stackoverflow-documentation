@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use App\Core\Config;
 
+use App\Core\libs\URL;
+use App\Core\Router;
+
 class Controller {
     public function __construct()
     {
@@ -18,6 +21,15 @@ class Controller {
 
         $twig->addFunction(new \Twig\TwigFunction('asset', function ($asset) {
             return sprintf(Config::get('config', 'root') . '%s', rtrim($asset, '/'));
+        }));
+
+        $twig->addFunction(new \Twig\TwigFunction('route', function ($name, $param = []) {
+            $route = Router::findRouteByName($name);
+            if (is_null($route)) return null;
+
+            $url = $route->getUrlProcessed($param);
+
+            return sprintf(Config::get('config', 'root') . '%s', $url);
         }));
 
         if (file_exists($viewPath)) {
