@@ -1,0 +1,25 @@
+{% extends "template.php.twig" %}
+
+
+{% block content %}
+    <div class="container">
+        <form class="needs-validation" action="../topic" method="post">
+
+            <div class="mb-3">
+                <label for="topicName" id="topicName">Enter a Topic Name:</label>
+                <input type="text" class="form-control is-invalid" name="title" placeholder="Enter Topic Name"
+                          required></input><br>
+
+                <label for="docTag">DocTag Select:</label>
+                <select class="form-control" id="docTag" name="doctag">
+
+                    {% for doctag in doctags %}
+                        <option value="{{ doctag.Id }}">{{ doctag.Title }}</option>
+                    {% endfor %}
+
+                </select>
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+{% endblock %}
