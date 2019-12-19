@@ -57,6 +57,17 @@ class Router {
         return null;
     }
 
+    public static function findRouteByName($name) {
+        $find = null;
+
+        array_filter(self::$_ROUTES, function ($route) use ($name, &$find) {
+            if ($route->getName() === $name) {
+                $find = $route;
+            }
+        });
+        return $find;
+    }
+
     private static function addRoute($url, $controller, $method) {
         // Get controller as index 0 and function as index 1
         $controller = explode("@", $controller);
@@ -86,14 +97,18 @@ class Router {
         // Glue back together
         $url = implode('/', $url);
 
-        self::$_ROUTES[] = new Route($method, $url, $controller[0], $controller[1], $params);
+        $route = new Route($method, $url, $controller[0], $controller[1], $params);
+
+        self::$_ROUTES[] = $route;
+
+        return $route;
     }
 
     public static function get($url, $controller) {
-        self::addRoute($url, $controller, 'GET');
+        return self::addRoute($url, $controller, 'GET');
     }
 
     public static function post($url, $controller) {
-        self::addRoute($url, $controller, 'POST');
+        return self::addRoute($url, $controller, 'POST');
     }
 }

@@ -1,9 +1,11 @@
 {% extends "template.php.twig" %}
 
 {% block content %}
-    <div class="container mt-5">
-        <h2 class="text-center">Create a new topic</h2><br>
-        <form class="needs-validation" action="../topic" method="post">
+
+    <div class="mt-5 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto">
+        <h2 class="text-center">Create a new topic</h2>
+        <br>
+        <form class="needs-validation" action="{{ route('topic.store') }}" method="post">
 
             <div class="mb-3">
                 <label for="topicName" id="topicName"><b>Enter a Topic Name:</b></label>
@@ -11,7 +13,8 @@
                        required></input><br>
 
                 <label for="docTag"><b>DocTag Select:</b></label>
-                <select class="form-control" id="docTag" name="doctag">
+                <select class="form-control" id="docTag" name="doctag" required>
+                <option selected disabled hidden value>--Choose from the dropdown</option>
 
                     {% for doctag in doctags %}
                         <option value="{{ doctag.Id }}">{{ doctag.Title }}</option>
@@ -19,9 +22,10 @@
 
                 </select>
 
-                <br><label for="topiccontent"><b>Topic Content:</b></label>
-                <textarea class="form-control" id="topiccontent" rows="3" name="tcontent"
-                          placeholder="Enter Topic Content"></textarea>
+                <br>
+                <label for="topic-content"><b>Topic Content:</b></label>
+                <textarea class="form-control" id="topic-content" rows="3" name="content"
+                          placeholder="Enter Topic Content" required></textarea>
 
                 <br>
                 <button class="btn btn-dark" onclick="history.go(-1);"> &#8592; Back</button>

@@ -20,7 +20,7 @@ class TopicController extends controller {
     }
 
     public function create() {
-        $doctags = DB::queryObject("SELECT Id, Title FROM doctags ORDER BY Title ASC");
+        $doctags = DB::table("doctags")->select(['Id', 'Title'])->orderBy('Title ASC')->getAll();
         $this->view('topic/create', ["doctags" => $doctags]);
     }
 
