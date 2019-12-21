@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use http\Env\Request;
+use App\Core\DB;
 
 class TopicController extends controller {
 
@@ -18,4 +19,13 @@ class TopicController extends controller {
         echo "Topic update - $id";
     }
 
+    public function create() {
+        $doctags = DB::table("doctags")->select(['Id', 'Title'])->orderBy('Title ASC')->getAll();
+        $this->view('topic/create', ["doctags" => $doctags]);
     }
+
+    public function store() {
+        var_dump($_POST);
+    }
+
+}
