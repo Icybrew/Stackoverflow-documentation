@@ -6,9 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/app.js" defer></script>
     <title> {{ title }}</title>
-  </head>
-  <body>
-        {% block content %}{% endblock %}
-  </body>
+</head>
+<body>
+{% block content %}{% endblock %}
+</body>
 </html>
