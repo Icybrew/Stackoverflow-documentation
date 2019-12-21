@@ -7,6 +7,7 @@ use http\Env\Request;
 class TopicController extends controller {
 
     public function show($id) {
+        $this->view("topic/topic");
         echo "Topic show - $id";
     }
 
