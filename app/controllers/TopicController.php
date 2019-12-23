@@ -2,16 +2,20 @@
 
 namespace App\Controllers;
 
-use http\Env\Request;
-
+use App\Topic;
 use App\Core\DB;
 
 class TopicController extends controller
 {
     public function show($id)
     {
-        $topics = DB::table("topics")->where('Id','=', $id)->getAll();
-        $this->view('topic/topic', ["topics" => $topics]);
+        $topic = Topic::find($id);
+        if(!isset($topic)){
+            $topics = (DB::queryObject("SELECT * FROM topics LIMIT 10"));
+            $this->view('index', ["topics" => $topics]);
+        }else{
+            $this->view('topic/topic', ['topic' => $topic]);
+        }
     }
 
     public function edit($id)
