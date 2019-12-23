@@ -12,25 +12,12 @@
                     <div class="cardbox shadow-lg bg-light p-3">
                         <div class="well p-5">
                             <div class="media-body">
-                                {% for topic in topics %}
                                     <h3 class="media-heading">{{ topic.Title }}</h3>
                                     Creation Date:
-                                    <td>{{ topic.CreationDate }}</td>
-                                {% endfor %}
+                                <p>{{ topic.CreationDate }} <span class="text-warning">(Last Edit: {{ topic.LastEditDate }})</span></p>
                                 <!-- Content -->
                                 <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                    </thead>
                                     <tbody>
-                                    {% for topic in topics %}
-                                        <tr>
-                                            <th scope="col">Last Edit Date:</th>
-                                            <td>{{ topic.LastEditDate }}</td>
-                                        </tr>
                                         <tr>
                                             <th scope="col">Syntax Html:</th>
                                             <td> {{ topic.SyntaxHtml }}</td>
@@ -76,13 +63,17 @@
                                             <th scope="col">Last Edit User Display Name:</th>
                                             <td> {{ topic.LastEditUserDisplayName }}</td>
                                         </tr>
-                                    {% endfor %}
+
                                     </tbody>
                                 </table>
-                                <button type="button" class="btn btn-info">Read</button>
-                                <button type="button" class="btn btn-danger offset-1">Delette</button>
-                                <button type="button" class="btn btn-success offset-8 text-right">Examples</button>
+                                <a href="{{ route('topic.create') }}"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Create</button></a>
+                                <a href="#"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit</button></a>
+                                <a href="#"><button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete</button></a>
+
+                                <a href="#"><button class="btn btn-outline-success my-2 my-sm-0 offset-7 " type="submit">Examples</button></a>
+
                             </div>
+                            <button class="btn btn-dark mt-2" onclick="history.go(-1);"> &#8592; Back</button>
                         </div>
                     </div><!--/ cardbox -->
                 </div><!--/ col-lg-6 -->
