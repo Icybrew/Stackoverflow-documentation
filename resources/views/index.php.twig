@@ -26,7 +26,7 @@
                         <td>{{ topic.CreationDate }}</td>
                         <td>{{ topic.LastEditDate }}</td>
                         <td>
-                            <a href="{{ route('topic.create') }}"><button class="btn btn-outline-success btn-sm">view</button></a>
+                            <a href="{{ route('topic.show',{'topic':topic.Id})}}" ><button class="btn btn-outline-success btn-sm">view</button></a>
                         </td>
                     </tr>
                 {% endfor %}
