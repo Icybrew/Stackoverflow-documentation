@@ -25,7 +25,7 @@
 │
 ├── config
 │   ├── _database.php
-│   ├── config.php
+│   ├── _config.php
 │   ├── database.php
 │   └── routes.php
 │
