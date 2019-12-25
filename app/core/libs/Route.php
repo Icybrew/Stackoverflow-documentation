@@ -3,85 +3,156 @@
 namespace App\Core\Libs;
 
 class Route {
-    private $name = null;
+
+    private $name;
     private $method;
     private $url;
     private $controller;
     private $function;
-    private $params;
+    private $parameters;
 
-    public function __construct($method, $url, $controller, $function, $params = [])
+    /**
+     * Route constructor.
+     * @param string $method
+     * @param string $url
+     * @param string $controller
+     * @param string $function
+     * @param array $params
+     */
+    public function __construct(string $method, string $url, string $controller, string $function, array $params = [], string $name = null)
     {
         $this->method = $method;
         $this->url = $url;
         $this->controller = $controller;
         $this->function = $function;
-        $this->params = $params;
-    }
-
-    public function setParamsByUrl($url) {
-        foreach ($this->params as &$param) {
-            $param['value'] = $url->getParam($param['index']);
-        }
-    }
-
-    public function name($name) {
+        $this->parameters = $params;
         $this->name = $name;
-        return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getName()
     {
         return $this->name;
     }
 
-    public function getMethod()
+    /**
+     * @return string
+     */
+    public function getMethod() : string
     {
         return $this->method;
     }
 
-    public function getUrl() {
-        return $this->url;
-    }
 
-    public function getController() {
-        return $this->controller;
-    }
+    /**
+     * @param array $parameters
+     * @return string
+     */
+    public function getUrl(array $parameters = []) : string
+    {
+        // Checking if required amount of parameters are given
+        if (count($this->parameters) > count($parameters)) throw new \Error('Not enough parameters given');
 
-    public function getFunction() {
-        return $this->function;
-    }
-
-    public function getParams() {
-        return $this->params;
-    }
-
-    public function getParameterValues() {
-        $values = [];
-        foreach ($this->params as $parameter) {
-            $values[] = $parameter['value'];
-        }
-        return $values;
-    }
-
-    public function getUrlProcessed($params = []) {
         $url = $this->url;
-        foreach ($params as $name => $value) {
-            $url = preg_replace('#\{' . $name . '\}#', $value, $url);
+        foreach ($this->parameters as $name => $parameter) {
+
+            // Throw error if required parameter not given
+            if (!isset($parameters[$name])) throw new \Error("No value given for parameter: '$name'");
+
+            // Replace url {name} with supplied parameter
+            $url = preg_replace('#\{' . $name . '\}#', $parameters[$name], $url);
         }
-
-        $url = ltrim($url, '/');
-
 
         return $url;
     }
 
-    public function compareTo($other) {
-        return $this->__toString() === $other->__toString();
+    /**
+     * @return string
+     */
+    public function getUrlRegex() : string
+    {
+        $url = $this->url;
+
+        // Placing '/' in front of every special character
+        $url = preg_quote($url, '/');
+
+        // Replacing \{Custom words\} to match {ANYTHING}
+        $url = preg_replace('#\\\{[A-z]+\\\}#', '[^\/]+', $url);
+
+        // Placing optional '/' in the beginning and in the end
+        $url = '\/?' . $url . '\/?';
+
+        return $url;
     }
 
-    public function __toString()
+    /**
+     * @return string
+     */
+    public function getController() : string
     {
-        return serialize($this);
+        return $this->controller;
     }
+
+    /**
+     * @return string
+     */
+    public function getFunction() : string
+    {
+        return $this->function;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameters() : array
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParameterValues() : array
+    {
+        return array_map(function ($parameter) {
+            return $parameter['value'];
+        }, $this->parameters);
+    }
+
+    /**
+     * @param string $name
+     * @return $this
+     */
+    public function name(string $name) : self
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @param array $parameters
+     */
+    public function setParametersByIndex(array $parameters)
+    {
+        foreach ($this->parameters as $name => &$parameter) {
+
+            if (!isset($parameters[$parameter['index']])) throw new \Error('No parameter given for index: ' . $parameter['index']);
+
+            $param = $parameters[$parameter['index']];
+
+            // Casting value to appropriate type
+            if (is_numeric($param)) {
+                if (is_float($param) || is_numeric($param) && ((float) $param != (int) $param)) {
+                    $param = (float) $param;
+                } else {
+                    $param = (int) $param;
+                }
+            }
+
+            $parameter['value'] = $param;
+        }
+    }
+
 }
