@@ -11,8 +11,7 @@ class TopicController extends controller
     {
         $topic = Topic::find($id);
         if(!isset($topic)){
-            $topics = (DB::queryObject("SELECT * FROM topics LIMIT 10"));
-            $this->view('index', ["topics" => $topics]);
+            $this->view("errors/error404");
         }else{
             $this->view('topic/topic', ['topic' => $topic]);
         }
