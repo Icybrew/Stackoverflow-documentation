@@ -20,7 +20,7 @@
                                     <tbody>
                                         <tr>
                                             <th scope="col">Syntax Html:</th>
-                                            <td> {{ topic.SyntaxHtml }}</td>
+                                            <td> {{ topic.SyntaxHtml | raw }}</td>
                                         </tr>
                                         <tr>
                                             <th scope="col">Introduction Markown:</th>
@@ -28,15 +28,15 @@
                                         </tr>
                                         <tr>
                                             <th scope="col">Parameters Html:</th>
-                                            <td>{{ topic.ParametersHtml }}</td>
+                                            <td>{{ topic.ParametersHtml | raw }}</td>
 
                                         </tr>
                                         <tr>
                                             <th scope="col">Remarks Html:</th>
-                                            <td> {{ topic.RemarksHtml }}</td>
+                                            <td> {{ topic.RemarksHtml | raw }}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="col">SyntaxMar kdown:</th>
+                                            <th scope="col">Syntax Markdown:</th>
                                             <td> {{ topic.SyntaxMarkdown }}</td>
                                         </tr>
                                         <tr>
@@ -48,8 +48,8 @@
                                             <td> {{ topic.RemarksMarkdown }}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="col">Hello World Versionns Html:</th>
-                                            <td> {{ topic.HelloWorldVersionnsHtml }}</td>
+                                            <th scope="col">Hello World Versions Html:</th>
+                                            <td> {{ topic.HelloWorldVersionnsHtml | raw }}</td>
                                         </tr>
                                         <tr>
                                             <th scope="col">Versions Java:</th>
@@ -57,7 +57,7 @@
                                         </tr>
                                         <tr>
                                             <th scope="col">Introduction Html:</th>
-                                            <td> {{ topic.IntroductionHtml }}</td>
+                                            <td> {{ topic.IntroductionHtml | raw }}</td>
                                         </tr>
                                         <tr>
                                             <th scope="col">Last Edit User Display Name:</th>
@@ -66,14 +66,15 @@
 
                                     </tbody>
                                 </table>
-                                <a href="{{ route('topic.create') }}"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Create</button></a>
-                                <a href="#"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit</button></a>
-                                <a href="#"><button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete</button></a>
-
-                                <a href="#"><button class="btn btn-outline-success my-2 my-sm-0 offset-7 " type="submit">Examples</button></a>
-
+                                <div class="d-flex flex-row">
+                                <button class="btn btn-dark" onclick="history.go(-1);"> &#8592; Back</button>
+                                    <div class="mx-auto">
+                                        <a href="{{ route('topic.edit', {'topic' : topic.Id}) }}"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit</button></a>
+                                        <a href="{{ route('topic.delete') }}"><button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete</button></a>
+                                    </div>
+                                    <a href="#"><button class="btn btn-outline-success my-2 my-sm-0 ml-auto" type="submit">Examples</button></a>
+                                </div>
                             </div>
-                            <button class="btn btn-dark mt-2" onclick="history.go(-1);"> &#8592; Back</button>
                         </div>
                     </div><!--/ cardbox -->
                 </div><!--/ col-lg-6 -->
