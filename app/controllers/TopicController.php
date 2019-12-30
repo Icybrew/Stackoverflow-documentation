@@ -2,20 +2,28 @@
 
 namespace App\Controllers;
 
-use http\Env\Request;
+use App\Topic;
 use App\Core\DB;
 
-class TopicController extends controller {
-
-    public function show($id) {
-        echo "Topic show - $id";
+class TopicController extends controller
+{
+    public function show($id)
+    {
+        $topic = Topic::find($id);
+        if(!isset($topic)){
+            $this->view("errors/error404");
+        }else{
+            $this->view('topic/topic', ['topic' => $topic]);
+        }
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         echo "Topic edit - $id";
     }
 
-    public function update($id) {
+    public function update($id)
+    {
         echo "Topic update - $id";
     }
 
@@ -27,5 +35,4 @@ class TopicController extends controller {
     public function store() {
         var_dump($_POST);
     }
-
 }
