@@ -27,7 +27,11 @@ class Controller {
             $route = Router::findRouteByName($name);
             if (is_null($route)) return null;
 
-            $url = $route->getUrlProcessed($param);
+            try {
+                $url = $route->getUrl($param);
+            } catch (\Throwable $ex) {
+                return $ex;
+            }
 
             return sprintf(Config::get('config', 'root') . '%s', $url);
         }));
