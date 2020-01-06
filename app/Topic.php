@@ -4,7 +4,7 @@ namespace App;
 
 use App\Core\Model;
 
-class Topic extends model {
+class Topic extends Model {
 
     // Default table name = 'class name'
     protected static $table = "topics";
