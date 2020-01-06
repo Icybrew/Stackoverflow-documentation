@@ -4,10 +4,13 @@
     <div class="container">
 
         <!-- Topic Edit Form -->
-        <form class="mt-5" method="post" action="../{{ topic.Id }}">
-            <div class="form-group">
-                <label for="title">Title:</label>
-                <input type="text" class="form-control" id="title" name="topicTitle" value="{{ topic.Title }}">
+        <form class="mt-5" method="post" action="{{ route('topic.edit') }}">
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="Title">Title</label>
+                </div>
+                <input type="text" class="form-control" id="Title" name="topicTitle" value="{{ topic.Title }}">
             </div>
 
             <div class="input-group mb-3">
