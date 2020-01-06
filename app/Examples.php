@@ -4,9 +4,9 @@ namespace App;
 
 use App\Core\Model;
 
-class Examples extends Model {
-    public function __construct()
-    {
-        // Examples model
-    }
+class Examples extends Model
+{
+    protected static $table = "examples";
+
+    protected static $primary_key = "id";
 }
