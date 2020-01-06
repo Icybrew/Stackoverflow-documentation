@@ -23,11 +23,15 @@ class TopicController extends controller
             $topic = Topic::find($id);
             $docTags = DB::table("doctags")->getAll();
 
-            $this->view('topic/editTopic', [
-                "topic" => $topic,
-                "title" => Config::get('config', 'name'),
-                "docTags" => $docTags
-            ]);
+            if(empty($topic)){
+                $this->view("errors/error404");
+            }else{
+                $this->view('topic/edit', [
+                    "topic" => $topic,
+                    "title" => Config::get('config', 'name'),
+                    "docTags" => $docTags
+                ]);
+            }
         }
     }
 
