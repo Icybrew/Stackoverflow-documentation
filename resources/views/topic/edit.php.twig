@@ -4,7 +4,7 @@
     <div class="container">
 
         <!-- Topic Edit Form -->
-        <form class="mt-5" method="post" action="{{ route('topic.store') }}">
+        <form class="mt-5" method="post" action="{{ route('topic.update', {'topic': topic.Id}) }}">
 
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
