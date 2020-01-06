@@ -4,9 +4,9 @@ namespace App;
 
 use App\Core\Model;
 
-class Examples extends Model
+class Doctag extends Model
 {
-    protected static $table = "examples";
+    protected static $table = "doctags";
 
     protected static $primary_key = "id";
 }
