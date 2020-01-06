@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Topic;
 use App\Core\DB;
+use App\Core\Config;
 
 class TopicController extends controller
 {
@@ -19,10 +20,10 @@ class TopicController extends controller
 
     public function edit($id) {
         {
-            $topic = (DB::queryObject("SELECT * FROM topics WHERE id=$id"));
-            $docTags = (DB::queryObject("SELECT * FROM doctags"));
+            $topic = Topic::find($id);
+            $docTags = DB::table("doctags")->getAll();
 
-            $this->view('topics/editTopic', [
+            $this->view('topic/editTopic', [
                 "topic" => $topic,
                 "title" => Config::get('config', 'name'),
                 "docTags" => $docTags
