@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Doctag;
 use App\Topic;
 use App\Core\DB;
 use App\Core\Config;
@@ -11,9 +12,9 @@ class TopicController extends controller
     public function show($id)
     {
         $topic = Topic::find($id);
-        if(!isset($topic)){
+        if (!isset($topic)) {
             $this->view("errors/error404");
-        }else{
+        } else {
             $this->view('topic/topic', ['topic' => $topic]);
         }
     }
@@ -40,12 +41,14 @@ class TopicController extends controller
         var_dump($_POST);
     }
 
-    public function create() {
-        $doctags = DB::table("doctags")->select(['Id', 'Title'])->orderBy('Title ASC')->getAll();
+    public function create()
+    {
+        $doctags = Doctag::select(['Id', 'Title'])->orderBy('Title', 'ASC')->getAll();
         $this->view('topic/create', ["doctags" => $doctags]);
     }
 
-    public function store() {
+    public function store()
+    {
         var_dump($_POST);
     }
 }
