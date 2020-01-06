@@ -22,7 +22,7 @@ class Router {
         // Finding route by URL
         $route = $this->findRouteByUrl($this->_url);
 
-        $this->_current_route = !is_null($route) ? $route : new Route($_SERVER["REQUEST_METHOD"], null, 'ErrorController', 'index');
+        $this->_current_route = !is_null($route) ? $route : new Route($_SERVER["REQUEST_METHOD"], $this->_url->getUrl(), 'ErrorController', 'index');
     }
 
     public function getUrl() {
@@ -39,21 +39,24 @@ class Router {
 
     public function findRouteByUrl($url) {
 
-        // Searching through routes for matching url
+        // Searching for matching route by URL
         foreach (self::$_ROUTES as $route) {
+
+            // Skip if request method doesn't match
             if ($url->getMethod() !== $route->getMethod()) continue;
 
-            $routeUrl = $route->getUrl();
+            // Testing if url matches
+            if(preg_match("#^" . $route->getUrlRegex() ."$#", $url->getUrl())) {
 
-            // Regexify
-            $routeUrl = preg_replace('#/#', '\/', $routeUrl);
-            $routeUrl = preg_replace('#\{[A-z]+\}#', '([^\/])+', $routeUrl);
+                // Setting route variables
+                $route->setParametersByIndex(explode('/', $url->getUrl()));
 
-            if(preg_match("#^\/?" . $routeUrl ."\/?$#", $url->getUrl())) {
-                $route->setParamsByUrl($url);
+                // Returning matched route for chaining
                 return $route;
             }
         }
+
+        // No matching route
         return null;
     }
 

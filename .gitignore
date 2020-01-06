@@ -10,5 +10,6 @@ package-lock.json
 
 /* App */
 config/database.php
+config/config.php
 public/css
 public/js

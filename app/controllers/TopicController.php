@@ -2,14 +2,19 @@
 
 namespace App\Controllers;
 
-use App\Core\Config;
+use App\Topic;
 use App\Core\DB;
-use http\Env\Request;
 
-class TopicController extends controller {
-
-    public function show($id) {
-        echo "Topic show - $id";
+class TopicController extends controller
+{
+    public function show($id)
+    {
+        $topic = Topic::find($id);
+        if(!isset($topic)){
+            $this->view("errors/error404");
+        }else{
+            $this->view('topic/topic', ['topic' => $topic]);
+        }
     }
 
     public function edit($id) {
@@ -30,4 +35,12 @@ class TopicController extends controller {
         var_dump($_POST);
     }
 
+    public function create() {
+        $doctags = DB::table("doctags")->select(['Id', 'Title'])->orderBy('Title ASC')->getAll();
+        $this->view('topic/create', ["doctags" => $doctags]);
     }
+
+    public function store() {
+        var_dump($_POST);
+    }
+}

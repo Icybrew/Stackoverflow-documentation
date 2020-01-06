@@ -9,6 +9,9 @@
 │   │
 │   ├── core
 │   │   │   libs
+│   │   │   ├── database
+│   │   │   │   └── QueryBuilder.php
+│   │   │   │
 │   │   │   ├── Route.php
 │   │   │   └── URL.php
 │   │   │
@@ -22,7 +25,7 @@
 │
 ├── config
 │   ├── _database.php
-│   ├── config.php
+│   ├── _config.php
 │   ├── database.php
 │   └── routes.php
 │
