@@ -29,6 +29,7 @@
                 <label for="HtmlRemarks">HtmlRemarks:</label>
                 <textarea rows="15" class="form-control" id="HtmlRemarks" name="RemarksHtml">{{ topic.RemarksHtml }}</textarea>
             </div>
+            <input type="hidden" name="_method" value="update">
             <button type="submit" class="float-right btn btn-success">Submit Changes →</button>
         </form>
         <button class="btn btn-dark" onclick="history.go(-1);"> ← Back</button>

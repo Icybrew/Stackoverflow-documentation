@@ -11,7 +11,7 @@ class URL
 
     public function __construct()
     {
-        $this->_method = $_SERVER['REQUEST_METHOD'];
+        $this->_method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
         $this->_url_unprocessed = isset($_GET['url']) ? $_GET['url'] : null;
         $this->_url_processed = $this->processURL();
         $this->_url_exploded = explode('/', $this->_url_processed);
@@ -19,7 +19,7 @@ class URL
 
     public function getMethod()
     {
-        return $this->_method;
+        return strtoupper($this->_method);
     }
 
     public function getUrlRaw() {

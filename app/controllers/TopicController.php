@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Doctag;
 use App\Topic;
-use App\Core\DB;
 use App\Core\Config;
 
 class TopicController extends controller
@@ -22,7 +21,7 @@ class TopicController extends controller
     public function edit($id) {
         {
             $topic = Topic::find($id);
-            $docTags = DB::table("doctags")->getAll();
+            $docTags = Doctag::all();
 
             if(empty($topic)){
                 $this->view("errors/error404");
@@ -48,6 +47,11 @@ class TopicController extends controller
     }
 
     public function store()
+    {
+        var_dump($_POST);
+    }
+
+    public function delete()
     {
         var_dump($_POST);
     }
