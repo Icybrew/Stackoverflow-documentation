@@ -3,8 +3,6 @@
 namespace App\Controllers;
 
 use App\Core\Config;
-
-use App\Core\libs\URL;
 use App\Core\Router;
 
 class Controller {
@@ -22,6 +20,12 @@ class Controller {
         $twig->addFunction(new \Twig\TwigFunction('asset', function ($asset) {
             return sprintf(Config::get('config', 'root') . '%s', rtrim($asset, '/'));
         }));
+
+        $twig->addFunction(new \Twig\TwigFunction('method', function ($method)  {
+            $g='<input type="hidden" name="_method" value="$method">';
+            return new \Twig\Markup($g, 'UTF-8');
+        }));
+
 
         $twig->addFunction(new \Twig\TwigFunction('route', function ($name, $param = []) {
             $route = Router::findRouteByName($name);

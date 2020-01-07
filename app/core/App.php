@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use Symfony\Component\HttpFoundation\Request;
+
 class App {
 
     private $current_controller = null;
@@ -10,6 +12,15 @@ class App {
     {
         // Initialising router
         $router = new Router();
+
+        // Initialising HttpFoundation
+        $request = Request::createFromGlobals();
+
+        $dependencies = [
+            'App\Core\App' => $this,
+            'App\Core\Router' => $router,
+            'Symfony\Component\HttpFoundation\Request' => $request
+        ];
 
         // Getting route controller name
         $className = "App\\Controllers\\" . $router->getRoute()->getController();
@@ -23,15 +34,26 @@ class App {
             // Initialising controller
             $this->current_controller = new $className();
 
-            // Checking if route controller contains function
-            if (method_exists($this->current_controller, $functionName)) {
+            $function = new \ReflectionMethod($className, $functionName);
+            $routeParameters = $router->getRoute()->getParameterValues();
+            $parameters = [];
 
-                // Calling route function with parameters
-                call_user_func_array([$this->current_controller, $functionName], $router->getRoute()->getParameterValues());
+            // Injecting dependencies and parameters
+            foreach ($function->getParameters() as $parameter) {
+                $type = $parameter->getType();
 
-            } else {
-                throw new \Error("Method: $functionName in $className not found!");
+                if (isset($type)) {
+                    $name = $type->getName();
+                    $parameters[] = $dependencies[$name];
+                } else {
+                    if (empty($routeParameters)) continue;
+                    $parameters[] = array_pop($routeParameters);
+                }
+
             }
+
+            // Calling route function with injected parameters
+            call_user_func_array([$this->current_controller, $functionName], $parameters);
 
         } else {
             throw new \Error("Class: $className not found!");
