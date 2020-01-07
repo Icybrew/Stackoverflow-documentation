@@ -7,6 +7,7 @@ use App\Topic;
 use App\Core\DB;
 use App\Core\Config;
 
+
 class TopicController extends controller
 {
     public function show($id)
@@ -19,14 +20,15 @@ class TopicController extends controller
         }
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         {
             $topic = Topic::find($id);
             $docTags = DB::table("doctags")->getAll();
 
-            if(empty($topic)){
+            if (empty($topic)) {
                 $this->view("errors/error404");
-            }else{
+            } else {
                 $this->view('topic/edit', [
                     "topic" => $topic,
                     "title" => Config::get('config', 'name'),
@@ -36,7 +38,8 @@ class TopicController extends controller
         }
     }
 
-    public function update($id) {
+    public function update($id)
+    {
         echo "Topic update - $id";
         var_dump($_POST);
     }
@@ -51,4 +54,18 @@ class TopicController extends controller
     {
         var_dump($_POST);
     }
+
+    public function search()
+    {
+        $category = isset($_GET['category'])?$_GET['category']:null;
+        $search = isset($_GET['search'])?$_GET['search']:null;
+
+        $perPage = 10;
+        $page = 2;
+        $offSet = $perPage * $page;
+
+        $topics = DB::queryObject("SELECT * FROM topics WHERE title LIKE \"%$search%\" ");
+        $this->view('index', ['topics' => $topics, "title" => Config::get('config', 'name')]);
+    }
+
 }
