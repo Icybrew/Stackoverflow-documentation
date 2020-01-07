@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Doctag;
 use App\Topic;
 use App\Core\Config;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class TopicController extends controller
@@ -49,16 +50,24 @@ class TopicController extends controller
         $this->view('topic/create', ["doctags" => $doctags]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        var_dump($_POST);
+        $data = $request->request->all();
+
+        $query = [
+          "Title" => $data['title'],
+          "DocTagId" => $data['doctag'],
+          "RemarksHtml" => $data['content'],
+        ];
+
+       Topic::insert($query);
+
     }
 
     public function search()
     {
         $category = isset($_GET['category']) ? $_GET['category'] : null;
         $search = isset($_GET['search']) ? $_GET['search'] : null;
-
         $perPage = 10;
         $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
