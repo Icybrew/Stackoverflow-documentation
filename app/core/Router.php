@@ -115,12 +115,12 @@ class Router {
         return self::addRoute($url, $controller, 'POST');
     }
 
-    public static function update($url, $controller) {
-        return self::addRoute($url, $controller, 'UPDATE');
+    public static function patch($url, $controller) {
+        return self::addRoute($url, $controller, 'PATCH');
     }
 
-    public static function store($url, $controller) {
-        return self::addRoute($url, $controller, 'STORE');
+    public static function put($url, $controller) {
+        return self::addRoute($url, $controller, 'PUT');
     }
 
     public static function delete($url, $controller) {
