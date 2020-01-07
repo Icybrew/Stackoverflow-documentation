@@ -6,6 +6,7 @@ use App\Doctag;
 use App\Topic;
 use App\Core\Config;
 
+
 class TopicController extends controller
 {
     public function show($id)
@@ -18,14 +19,15 @@ class TopicController extends controller
         }
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         {
             $topic = Topic::find($id);
             $docTags = Doctag::all();
 
-            if(empty($topic)){
+            if (empty($topic)) {
                 $this->view("errors/error404");
-            }else{
+            } else {
                 $this->view('topic/edit', [
                     "topic" => $topic,
                     "title" => Config::get('config', 'name'),
@@ -35,7 +37,8 @@ class TopicController extends controller
         }
     }
 
-    public function update($id) {
+    public function update($id)
+    {
         echo "Topic update - $id";
         var_dump($_POST);
     }
@@ -51,9 +54,29 @@ class TopicController extends controller
         var_dump($_POST);
     }
 
+    public function search()
+    {
+        $category = isset($_GET['category']) ? $_GET['category'] : null;
+        $search = isset($_GET['search']) ? $_GET['search'] : null;
+
+        $perPage = 10;
+        $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+        if ($page >= 0) {
+            $topics = Topic::select('*')->where('Title', 'LIKE', "%$search%")->pagination($perPage, $page)->getAll();
+            $maxItem = Topic::select('COUNT(id) as count')->where('Title', 'LIKE', "%$search%")->get();
+        }
+        if ($page < 0 || $perPage * $page > ceil(($maxItem->count / $perPage)) * $perPage) {
+            $this->view('errors/error404');
+        } else {
+            $this->view('index', ['topics' => $topics, "title" => Config::get('config', 'name'), 'page' => $page, 'search' => $search, 'topicCount' => ($maxItem->count / $perPage)]);
+        }
+    }
+
     public function delete()
     {
         var_dump($_POST);
     }
+
 }
 
