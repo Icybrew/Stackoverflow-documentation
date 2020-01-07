@@ -3,7 +3,7 @@
 use App\Core\Router;
 
 /* Index */
-Router::get("/", "indexController@index")->name('home');
+Router::get("", "indexController@index")->name('home');
 
 /* Topic  */
 
