@@ -10,39 +10,56 @@
         <!-- Content -->
         <table class="table">
             <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Creation Date</th>
-                    <th scope="col">Last Edit Date</th>
-                    <th scope="col"></th>
-                </tr>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Creation Date</th>
+                <th scope="col">Last Edit Date</th>
+                <th scope="col"></th>
+            </tr>
             </thead>
             <tbody>
-                {% for topic in topics %}
-                    <tr>
-                        <th scope="row">{{ topic.Id }}</th>
-                        <td>{{ topic.Title }}</td>
-                        <td>{{ topic.CreationDate }}</td>
-                        <td>{{ topic.LastEditDate }}</td>
-                        <td>
-                            <a href="{{ route('topic.show',{'topic':topic.Id})}}" ><button class="btn btn-outline-success btn-sm">view</button></a>
-                        </td>
-                    </tr>
-                {% endfor %}
+            {% for topic in topics %}
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr> <!-- A gap after the last table's record-->
+                    <th scope="row">{{ topic.Id }}</th>
+                    <td>{{ topic.Title }}</td>
+                    <td>{{ topic.CreationDate }}</td>
+                    <td>{{ topic.LastEditDate }}</td>
+                    <td>
+                        <a href="{{ route('topic.show',{'topic':topic.Id}) }}">
+                            <button class="btn btn-outline-success btn-sm">view</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr> <!-- A gap after the last table's record-->
             </tbody>
         </table>
+        <div class="d-flex justify-content-center">
 
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item{{ page<=1 ? ' disabled' }}"><a class="page-link"
+                                                                        href="{{ route(topic.search) }}?search={{ search }}&page={{ page<=1 ? 1 : page-1 }}">Previous</a>
+                    </li>
+
+                    <li class="page-item{{ page>=topicCount ? ' disabled' }}"><a class="page-link"
+                                                                                 href="{{ route(topic.search) }}?search={{ search }}&page={{ page>=topicCount ? topicCount : page+1 }}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
         <!-- Footer -->
         <div class="footer navbar-fixed-bottom">
-            <a href="topic/create"><button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="create">Create</button></a>
+            <a href="topic/create">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="create">Create</button>
+            </a>
         </div>
     </div>
 {% endblock %}

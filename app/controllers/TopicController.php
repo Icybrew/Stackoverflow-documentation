@@ -57,15 +57,23 @@ class TopicController extends controller
 
     public function search()
     {
-        $category = isset($_GET['category'])?$_GET['category']:null;
-        $search = isset($_GET['search'])?$_GET['search']:null;
+        $category = isset($_GET['category']) ? $_GET['category'] : null;
+        $search = isset($_GET['search']) ? $_GET['search'] : null;
 
         $perPage = 10;
-        $page = 2;
-        $offSet = $perPage * $page;
+        $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
-        $topics = DB::queryObject("SELECT * FROM topics WHERE title LIKE \"%$search%\" ");
-        $this->view('index', ['topics' => $topics, "title" => Config::get('config', 'name')]);
+        if ($page >= 0) {
+//            $topics = DB::queryObject("SELECT * FROM topics WHERE title LIKE \"%$search%\" LIMIT $offSet, $perPage");
+            $topics = Topic::select('*')->where('Title', 'LIKE', "%$search%")->pagination($perPage, $page)->getAll();
+            $maxItem = Topic::select('COUNT(id) as count')->where('Title', 'LIKE', "%$search%")->get();
+        }
+        var_dump($perPage * $page);
+        if ($page < 0 || $perPage * $page > ceil(($maxItem->count / $perPage)) * $perPage) {
+            $this->view('errors/error404');
+        } else {
+            $this->view('index', ['topics' => $topics, "title" => Config::get('config', 'name'), 'page' => $page, 'search' => $search, 'topicCount' => ($maxItem->count / $perPage)]);
+        }
     }
 
 }
