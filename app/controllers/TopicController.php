@@ -64,11 +64,9 @@ class TopicController extends controller
         $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
         if ($page >= 0) {
-//            $topics = DB::queryObject("SELECT * FROM topics WHERE title LIKE \"%$search%\" LIMIT $offSet, $perPage");
             $topics = Topic::select('*')->where('Title', 'LIKE', "%$search%")->pagination($perPage, $page)->getAll();
             $maxItem = Topic::select('COUNT(id) as count')->where('Title', 'LIKE', "%$search%")->get();
         }
-        var_dump($perPage * $page);
         if ($page < 0 || $perPage * $page > ceil(($maxItem->count / $perPage)) * $perPage) {
             $this->view('errors/error404');
         } else {
