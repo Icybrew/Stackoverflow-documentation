@@ -12,67 +12,81 @@
                     <div class="cardbox shadow-lg bg-light p-3">
                         <div class="well p-5">
                             <div class="media-body">
-                                    <h3 class="media-heading">{{ topic.Title }}</h3>
-                                    Creation Date:
-                                <p>{{ topic.CreationDate }} <span class="text-warning">(Last Edit: {{ topic.LastEditDate }})</span></p>
+                                <h3 class="media-heading">{{ topic.Title }}</h3>
+                                <p class="text-muted">{{ topic.CreationDate }}</p>
                                 <!-- Content -->
                                 <table class="table">
                                     <tbody>
-                                        <tr>
-                                            <th scope="col">Syntax Html:</th>
-                                            <td> {{ topic.SyntaxHtml | raw }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Introduction Markown:</th>
-                                            <td>  {{ topic.IntroductionMarkown }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Parameters Html:</th>
-                                            <td>{{ topic.ParametersHtml | raw }}</td>
+                                    <tr>
+                                        <th scope="col">Syntax Html:</th>
+                                        <td> {{ topic.SyntaxHtml | raw }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Introduction Markown:</th>
+                                        <td>  {{ topic.IntroductionMarkown }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Parameters Html:</th>
+                                        <td>{{ topic.ParametersHtml | raw }}</td>
 
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Remarks Html:</th>
-                                            <td> {{ topic.RemarksHtml | raw }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Syntax Markdown:</th>
-                                            <td> {{ topic.SyntaxMarkdown }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Parameters Markdown:</th>
-                                            <td> {{ topic.ParametersMarkdown }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Remarks Markdown:</th>
-                                            <td> {{ topic.RemarksMarkdown }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Hello World Versions Html:</th>
-                                            <td> {{ topic.HelloWorldVersionnsHtml | raw }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Versions Java:</th>
-                                            <td> {{ topic.VersionsJava }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Introduction Html:</th>
-                                            <td> {{ topic.IntroductionHtml | raw }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="col">Last Edit User Display Name:</th>
-                                            <td> {{ topic.LastEditUserDisplayName }}</td>
-                                        </tr>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Remarks Html:</th>
+                                        <td> {{ topic.RemarksHtml | raw }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Syntax Markdown:</th>
+                                        <td> {{ topic.SyntaxMarkdown }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Parameters Markdown:</th>
+                                        <td> {{ topic.ParametersMarkdown }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Remarks Markdown:</th>
+                                        <td> {{ topic.RemarksMarkdown }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Hello World Versions Html:</th>
+                                        <td> {{ topic.HelloWorldVersionnsHtml | raw }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Versions Java:</th>
+                                        <td> {{ topic.VersionsJava }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Introduction Html:</th>
+                                        <td> {{ topic.IntroductionHtml | raw }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">Last Edit User Display Name:</th>
+                                        <td> {{ topic.LastEditUserDisplayName }}</td>
+                                    </tr>
 
                                     </tbody>
                                 </table>
+                                <div></div>
+                                <div class="text-muted text-center mb-3">
+                                    Last updated
+                                    <div>{{ topic.LastEditDate }}</div>
+                                </div>
                                 <div class="d-flex flex-row">
-                                <button class="btn btn-dark" onclick="history.go(-1);"> &#8592; Back</button>
+                                    <button class="btn btn-dark" onclick="history.go(-1);"> &#8592; Back</button>
                                     <div class="mx-auto">
-                                        <a href="{{ route('topic.edit', {'topic' : topic.Id}) }}"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit</button></a>
-                                        <a href="{{ route('topic.delete') }}"><button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete</button></a>
+                                        <a href="{{ route('topic.edit', {'topic' : topic.Id}) }}">
+                                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit
+                                            </button>
+                                        </a>
+                                        <a href="{{ route('topic.delete') }}">
+                                            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete
+                                            </button>
+                                        </a>
                                     </div>
-                                    <a href="#"><button class="btn btn-outline-success my-2 my-sm-0 ml-auto" type="submit">Examples</button></a>
+                                    <a href="#">
+                                        <button class="btn btn-outline-success my-2 my-sm-0 ml-auto" type="submit">
+                                            Examples
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
