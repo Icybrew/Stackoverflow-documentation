@@ -114,4 +114,16 @@ class Router {
     public static function post($url, $controller) {
         return self::addRoute($url, $controller, 'POST');
     }
+
+    public static function patch($url, $controller) {
+        return self::addRoute($url, $controller, 'PATCH');
+    }
+
+    public static function put($url, $controller) {
+        return self::addRoute($url, $controller, 'PUT');
+    }
+
+    public static function delete($url, $controller) {
+        return self::addRoute($url, $controller, 'DELETE');
+    }
 }
