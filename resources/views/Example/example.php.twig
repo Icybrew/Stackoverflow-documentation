@@ -1,0 +1,31 @@
+{% extends "template.php.twig" %}
+
+{% block content %}
+    <div class="footer navbar-fixed-bottom">
+        <a href="{{ route('example.create') }}">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="createExmple">Create</button>
+        </a>
+    </div>
+
+    <h1 class="modal-title">Examples</h1>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+
+    {% for example in examples %}
+        <table class="table border border-success mb-5">
+            <tbody>
+            <tr>
+                <th scope="col">Name:</th>
+                <td>{{ example.Title }}</td>
+            </tr>
+
+            <tr>
+                <th scope="col">Example:</th>
+                <td>{{ example.BodyHtml | raw }}</td>
+            </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+
+{% endblock %}
