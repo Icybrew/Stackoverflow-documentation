@@ -7,6 +7,7 @@ use App\Topic;
 use App\Core\Config;
 use Symfony\Component\HttpFoundation\Request;
 
+
 class TopicController extends controller
 {
     public function show($id)
@@ -35,10 +36,23 @@ class TopicController extends controller
             }
     }
 
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        echo "Topic update - $id";
-        var_dump($_POST);
+        $data = $request->request->all();
+        $topic = Topic::find($id);
+        $query = [
+            "Title" => $data['topicTitle'],
+            "DocTagId" => $data['topicDocTag'],
+            "RemarksHtml" => $data['RemarksHtml'],
+        ];
+        if(strlen($query['Title']) <= 0 || strlen($query['DocTagId']) <= 0 || strlen($query['RemarksHtml']) <= 0){
+            $this->view('errors/error404');
+        }
+        Topic::update($query, $id);
+        $hostname = 'http://' . $request->server->get('HTTP_HOST');
+        $uri = $request->server->get('REQUEST_URI');
+        $redirect = $hostname . $uri . '/';
+        header("Location: $redirect");
     }
 
     public function create()
