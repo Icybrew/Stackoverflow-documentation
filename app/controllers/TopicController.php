@@ -9,7 +9,6 @@ use App\Topic;
 use App\Core\Config;
 use App\Core\DB;
 use Symfony\Component\HttpFoundation\Request;
-use App\Core\DB;
 
 
 class TopicController extends controller
@@ -140,7 +139,6 @@ class TopicController extends controller
             $deleted = $topic->deleted;
             if ($deleted == 0) {
                 DB::table('Topics')->where('Id', '=', $id)->update(['deleted' => 1]);
-                echo "<script type='text/javascript'>alert('Documentation record deleted');</script>";
                 $hostname = 'http://' . $request->server->get('HTTP_HOST');
                 $uri = $request->server->get('REQUEST_URI');
                 $redirect = $hostname . Config::get('config', 'root' ).$urlHome ;

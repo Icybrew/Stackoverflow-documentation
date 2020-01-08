@@ -60,7 +60,7 @@ class Router {
         return null;
     }
 
-    public static function findRouteByName($name) : Route {
+    public static function findRouteByName($name) : ?Route {
         $find = null;
 
         array_filter(self::$_ROUTES, function ($route) use ($name, &$find) {
