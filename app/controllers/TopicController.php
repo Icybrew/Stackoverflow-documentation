@@ -60,7 +60,15 @@ class TopicController extends controller
           "RemarksHtml" => $data['content'],
         ];
 
-       Topic::insert($query);
+        if(!isset($query['Title']) || !isset($query['DocTagId']) || !isset($query['RemarksHtml'])){
+            $this->view('errors/error404');
+        }
+
+        if(strlen($query['Title']) <= 0 || strlen($query['DocTagId']) <= 0 || strlen($query['RemarksHtml']) <= 0){
+            $this->view('errors/error404');
+        }
+
+        Topic::insert($query);
 
     }
 
