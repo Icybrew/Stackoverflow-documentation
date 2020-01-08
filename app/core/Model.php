@@ -50,7 +50,7 @@ abstract class Model
 
     public static function update(array $data, $id)
     {
-        return self::createBuilder(self::getTable())->update($data);
+        return self::createBuilder(self::getTable())->where('id', '=', $id)->update($data);
     }
 
     public static function insert(array $data, $type = false)
