@@ -54,7 +54,7 @@ class TopicController extends controller
     {
         $data = $request->request->all();
 
-        if(!isset($data['Title']) || !isset($data['DocTagId']) || !isset($data['RemarksHtml'])){
+        if(!isset($data['title']) || !isset($data['doctag']) || !isset($data['content'])){
             $this->view('errors/error404');
         }
 
