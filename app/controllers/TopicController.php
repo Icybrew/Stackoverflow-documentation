@@ -6,6 +6,7 @@ use App\Doctag;
 use App\Examples;
 use App\Topic;
 use App\Core\Config;
+use App\Core\DB;
 use Symfony\Component\HttpFoundation\Request;
 
 
