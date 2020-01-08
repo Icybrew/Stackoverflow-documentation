@@ -56,20 +56,19 @@ class TopicController extends controller
 
         if(!isset($data['title']) || !isset($data['doctag']) || !isset($data['content'])){
             $this->view('errors/error404');
+        } else {
+            $query = [
+                "Title" => $data['title'],
+                "DocTagId" => $data['doctag'],
+                "RemarksHtml" => $data['content'],
+            ];
+
+            if(strlen($query['Title']) <= 0 || strlen($query['DocTagId']) <= 0 || strlen($query['RemarksHtml']) <= 0){
+                $this->view('errors/error404');
+            }
+
+            Topic::insert($query);
         }
-
-        $query = [
-          "Title" => $data['title'],
-          "DocTagId" => $data['doctag'],
-          "RemarksHtml" => $data['content'],
-        ];
-
-        if(strlen($query['Title']) <= 0 || strlen($query['DocTagId']) <= 0 || strlen($query['RemarksHtml']) <= 0){
-            $this->view('errors/error404');
-        }
-
-        Topic::insert($query);
-
     }
 
     public function search()
