@@ -15,7 +15,7 @@ class TopicController extends controller
     {
         $topic = Topic::find($id);
 
-        if (!empty($topic)) {
+        if (empty($topic)) {
             $this->view("errors/error404");
         } else {
             $examples = Examples::select('*')->where('DocTopicId', '=', $topic->Id)->getAll();
