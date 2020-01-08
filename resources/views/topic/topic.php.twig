@@ -70,7 +70,7 @@
                                 <button class="btn btn-dark" onclick="history.go(-1);"> &#8592; Back</button>
                                     <div class="mx-auto">
                                         <a href="{{ route('topic.edit', {'topic' : topic.Id}) }}"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit</button></a>
-                                        <a href="{{ route('topic.delete') }}"><button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete</button></a>
+                                        <a href="{{ route('topic.delete', {'topic' : topic.Id}) }}"><button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete</button></a>
                                     </div>
                                     <a href="#"><button class="btn btn-outline-success my-2 my-sm-0 ml-auto" type="submit">Examples</button></a>
                                 </div>

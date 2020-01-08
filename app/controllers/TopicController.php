@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Doctag;
 use App\Topic;
 use App\Core\Config;
+use App\Core\DB;
 
 class TopicController extends controller
 {
@@ -53,7 +54,11 @@ class TopicController extends controller
 
     public function delete()
     {
-        var_dump($_POST);
+//        DB::table('Topic')->delete('Id')->getAll();
+//        echo ""
+
+         $topic = DB::table('topics')->select('id')->getAll();
+        echo $topic->Id;
     }
 }
 
