@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="d-flex flex-row">
                                     <button class="btn btn-dark" onclick="history.go(-1);"> &#8592; Back</button>
-                                    <div class="mx-auto">
+                                    <div class="ml-auto">
                                         <form action="{{ route('topic.delete', {'topic' : topic.Id}) }}" method="post" class="d-inline">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Delete
@@ -90,6 +90,10 @@
                                             </button>
                                         </a>
                                     </div>
+                                        <button class="btn btn-outline-success my-2 my-sm-0 ml-auto" data-toggle="modal" data-target=".bd-example-modal-lg" type="submit">
+                                            Examples
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -98,4 +102,41 @@
             </div><!--/ row -->
         </div><!--/ container -->
     </section>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <button type="button" class="close text-right" data-dismiss="modal" >&times;</button>
+                                <table class="table">
+                                    <tbody>
+                                    {% for example in examples %}
+
+                                        <tr>
+                                            <th>
+                                                <h2>Example ID </h2>
+                                                <td><h2>{{ example.Id }}</h2></td>
+                                            </th>
+                                        </tr>
+
+                                    <tr>
+                                        <th scope="col">Title:</th>
+                                        <td>{{ example.Title }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="col">Body Html:</th>
+                                        <td>{{ example.BodyHtml | raw }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="col">Body Markdown:</th>
+                                        <td>{{ example.BodyMarkdown | raw }}</td>
+                                    </tr>
+
+                                    <tr><th><td></td></th></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}
