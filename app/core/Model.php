@@ -30,7 +30,7 @@ abstract class Model
 
     public static function find($id)
     {
-        return self::createBuilder(self::getTable())->find($id);
+        return self::createBuilder(self::getTable())->where('deleted', '=', 0)->find($id);
     }
 
     public static function select($fields)
@@ -40,7 +40,7 @@ abstract class Model
 
     public static function where($where, $op = null, $val = null, $type = '', $andOr = 'AND')
     {
-        return self::createBuilder(self::getTable())->select($where, $op, $val, $type, $andOr);
+        return self::createBuilder(self::getTable())->where($where, $op, $val, $type, $andOr);
     }
 
     public static function all($type = null, $argument = null)

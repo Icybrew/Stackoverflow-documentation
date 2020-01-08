@@ -14,7 +14,8 @@ class TopicController extends controller
     public function show($id)
     {
         $topic = Topic::find($id);
-        if (!isset($topic)) {
+
+        if (!empty($topic)) {
             $this->view("errors/error404");
         } else {
             $examples = Examples::select('*')->where('DocTopicId', '=', $topic->Id)->getAll();
@@ -42,15 +43,19 @@ class TopicController extends controller
     {
         $data = $request->request->all();
         $topic = Topic::find($id);
+
+        if(!isset($topic, $data['topicTitle'], $data['topicDocTag'], $data['RemarksHtml']) || strlen($data['topicTitle']) == 0 || strlen($data['topicDocTag']) || strlen($data['RemarksHtml'])){
+            $this->view('errors/error404');
+        }
+
         $query = [
             "Title" => $data['topicTitle'],
             "DocTagId" => $data['topicDocTag'],
             "RemarksHtml" => $data['RemarksHtml'],
         ];
-        if(strlen($query['Title']) <= 0 || strlen($query['DocTagId']) <= 0 || strlen($query['RemarksHtml']) <= 0){
-            $this->view('errors/error404');
-        }
         Topic::update($query, $id);
+
+
         $hostname = 'http://' . $request->server->get('HTTP_HOST');
         $uri = $request->server->get('REQUEST_URI');
         $redirect = $hostname . $uri . '/';
@@ -107,12 +112,13 @@ class TopicController extends controller
             }
             $topics = $topics->getAll();
 
-            $topicCount = count($topics);
+            $topicCount = Topic::select('COUNT(topics.Id) AS count')->join('doctags', 'doctags.Id', '=', 'topics.DocTagId')->where('topics.title', 'LIKE', "%$search%")->where('deleted', '=', 0);
+            $topicCount = $topicCount->get();
         }
-        if ($page < 0 || $perPage * $page > ceil(($topicCount / $perPage)) * $perPage) {
+        if ($page < 0 || $perPage * $page > ceil(($topicCount->count / $perPage)) * $perPage) {
             $this->view('errors/error404');
         } else {
-            $this->view('index', ['topics' => $topics, "title" => Config::get('config', 'name'), 'category' => $category, 'search' => $search, 'page' => $page, 'topicCount' => ($topicCount / $perPage)]);
+            $this->view('index', ['topics' => $topics, "title" => Config::get('config', 'name'), 'category' => $category, 'search' => $search, 'page' => $page, 'topicCount' => ($topicCount->count / $perPage)]);
         }
     }
 
