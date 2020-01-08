@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Doctag;
 use App\Topic;
 use App\Core\Config;
-use App\Core\DB;
+use Symfony\Component\HttpFoundation\Request;
 
 class TopicController extends controller
 {
@@ -47,16 +47,36 @@ class TopicController extends controller
         $this->view('topic/create', ["doctags" => $doctags]);
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        var_dump($_POST);
+        $data = $request->request->all();
+
+        if(!isset($data['title']) || !isset($data['doctag']) || !isset($data['content'])){
+            $this->view('errors/error404');
+        } else {
+            $query = [
+                "Title" => $data['title'],
+                "DocTagId" => $data['doctag'],
+                "RemarksHtml" => $data['content'],
+            ];
+
+            if(strlen($query['Title']) <= 0 || strlen($query['DocTagId']) <= 0 || strlen($query['RemarksHtml']) <= 0){
+                $this->view('errors/error404');
+            }
+
+            $id = Topic::insert($query);
+            $hostname = 'http://' . $request->server->get('HTTP_HOST');
+            $uri = $request->server->get('REQUEST_URI');
+            $redirect = $hostname . $uri . '/' . $id;
+            header("Location: $redirect");
+
+        }
     }
 
     public function search()
     {
         $category = isset($_GET['category']) ? $_GET['category'] : null;
         $search = isset($_GET['search']) ? $_GET['search'] : null;
-
         $perPage = 10;
         $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
