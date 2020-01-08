@@ -64,7 +64,6 @@
                                         <th scope="col">Last Edit User Display Name:</th>
                                         <td> {{ topic.LastEditUserDisplayName }}</td>
                                     </tr>
-
                                     </tbody>
                                 </table>
                                 <div class="d-flex flex-row">
@@ -77,16 +76,15 @@
                                         </form>
                                     </div>
                                     <div>
-                                    <a href="{{ route('topic.edit', {'topic' : topic.Id}) }}">
-                                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit
-                                        </button>
-                                    </a>
-
-                                    <a href="#">
-                                        <button class="btn btn-outline-success my-2 my-sm-0 ml-auto" type="submit">
-                                            Examples
-                                        </button>
-                                    </a>
+                                        <a href="{{ route('topic.edit', {'topic' : topic.Id}) }}">
+                                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Edit
+                                            </button>
+                                        </a>
+                                        <a href="#">
+                                            <button class="btn btn-outline-success my-2 my-sm-0 ml-auto" type="submit">
+                                                Examples
+                                            </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
