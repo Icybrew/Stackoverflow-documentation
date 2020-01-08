@@ -67,7 +67,12 @@ class TopicController extends controller
                 $this->view('errors/error404');
             }
 
-            Topic::insert($query);
+            $id = Topic::insert($query);
+            $hostname = 'http://' . $request->server->get('HTTP_HOST');
+            $uri = $request->server->get('REQUEST_URI');
+            $redirect = $hostname . $uri . '/' . $id;
+            header("Location: $redirect");
+
         }
     }
 
