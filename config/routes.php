@@ -15,3 +15,11 @@ Router::get("/topic/{topic}/edit", "TopicController@edit")->name('topic.edit');
 Router::patch("/topic/{topic}", "TopicController@update")->name('topic.update');
 Router::delete("/topic/{topic}", "TopicController@delete")->name('topic.delete');
 Router::put("/topic", "TopicController@store")->name('topic.store');
+
+
+
+
+/* API */
+
+/* DocTags */
+Router::get('/api/doctags', 'DocTagsController@doctags')->name('api.doctags.doctags');

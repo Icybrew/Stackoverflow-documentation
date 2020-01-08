@@ -12,9 +12,10 @@
             <thead>
             <tr>
                 <th scope="col">ID</th>
+                <th scope="col">Language</th>
                 <th scope="col">Title</th>
-                <th scope="col">Creation Date</th>
-                <th scope="col">Last Edit Date</th>
+                <th scope="col">Created</th>
+                <th scope="col">Updated</th>
                 <th scope="col"></th>
             </tr>
             </thead>
@@ -22,6 +23,7 @@
             {% for topic in topics %}
                 <tr>
                     <th scope="row">{{ topic.Id }}</th>
+                    <td>{{ topic.tag }}</td>
                     <td>{{ topic.Title }}</td>
                     <td>{{ topic.CreationDate }}</td>
                     <td>{{ topic.LastEditDate }}</td>
@@ -45,12 +47,10 @@
 
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                    <li class="page-item{{ page<=1 ? ' disabled' }}"><a class="page-link"
-                                                                        href="{{ route(topic.search) }}?search={{ search }}&page={{ page<=1 ? 1 : page-1 }}">Previous</a>
+                    <li class="page-item{{ page<=1 ? ' disabled' }}"><a class="page-link" href="{{ route(topic.search) }}?category={{ category }}&search={{ search }}&page={{ page<=1 ? 1 : page-1 }}">Previous</a>
                     </li>
 
-                    <li class="page-item{{ page>=topicCount ? ' disabled' }}"><a class="page-link"
-                                                                                 href="{{ route(topic.search) }}?search={{ search }}&page={{ page>=topicCount ? topicCount : page+1 }}">Next</a>
+                    <li class="page-item{{ page>=topicCount ? ' disabled' }}"><a class="page-link" href="{{ route(topic.search) }}?category={{ category }}&search={{ search }}&page={{ page>=topicCount ? topicCount : page+1 }}">Next</a>
                     </li>
                 </ul>
             </nav>

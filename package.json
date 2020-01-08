@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Stackoverflow documentation search engine",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.19.1"
+  },
   "devDependencies": {
     "bootstrap": "^4.4.1",
     "css-loader": "^3.4.0",

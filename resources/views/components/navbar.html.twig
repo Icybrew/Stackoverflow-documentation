@@ -3,7 +3,8 @@
     <p class="h1">Documentation</p>
 </div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -12,25 +13,12 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route("home") }}">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Languages
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" id="contributors">Contributors</a>
-                    <a class="dropdown-item" href="#">Contributor Types</a>
-                    <a class="dropdown-item" href="#">Contributor Deletion reasons</a>
-                    <a class="dropdown-item" href="#">Doctags</a>
-                    <a class="dropdown-item" href="#">Doctag versions</a>
-                    <a class="dropdown-item" href="#">Topics</a>
-                    <a class="dropdown-item" href="#">Topic histories</a>
-                    <a class="dropdown-item" href="#">Topic history types</a>
-                    <a class="dropdown-item" href="#">Examples</a>
-
-                </div>
         </ul>
         <form class="form-inline my-2 my-lg-0" action="{{ route("topic.search") }}">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" value="{{ search }}" aria-label="Search" required>
+            <div class="search-category-wrapper">
+                <input class="form-control" id="search-category" type="text" name="category" value="{{ category }}" placeholder="Language" autocomplete="off">
+            </div>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" name="search" value="{{ search }}" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
