@@ -6,11 +6,11 @@
         <h2 class="text-center">Create a new topic</h2>
         <br>
         <form class="needs-validation" action="{{ route('topic.store') }}" method="post">
-
+            {{ method('PUT') }}
             <div class="mb-3">
                 <label for="topicName" id="topicName"><b>Enter a Topic Name:</b></label>
-                <input type="text" class="form-control" name="title" placeholder="Enter Topic Name"
-                       required></input><br>
+                <input type="text" class="form-control" name="title" placeholder="Enter Topic Name" required>
+                <br>
 
                 <label for="docTag"><b>DocTag Select:</b></label>
                 <select class="form-control" id="docTag" name="doctag" required>

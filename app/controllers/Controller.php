@@ -22,7 +22,7 @@ class Controller {
         }));
 
         $twig->addFunction(new \Twig\TwigFunction('method', function ($method)  {
-            $g='<input type="hidden" name="_method" value="$method">';
+            $g = '<input type="hidden" name="_method" value="' . $method . '">';
             return new \Twig\Markup($g, 'UTF-8');
         }));
 
