@@ -2,11 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Core\Router;
 use App\Doctag;
 use App\Examples;
 use App\Topic;
 use App\Core\Config;
 use Symfony\Component\HttpFoundation\Request;
+use App\Core\DB;
 
 
 class TopicController extends controller
@@ -85,6 +87,7 @@ class TopicController extends controller
                 $this->view('errors/error404');
             }
 
+
             $id = Topic::insert($query);
             $hostname = 'http://' . $request->server->get('HTTP_HOST');
             $uri = $request->server->get('REQUEST_URI');
@@ -122,8 +125,9 @@ class TopicController extends controller
         }
     }
 
-    public function delete($id)
+    public function delete($id, Router $router, Request $request)
     {
+        $urlHome=$router::findRouteByName('topic.index')->getUrl();
         $topic = Topic::find($id);
 
         if (!isset($topic)) {
@@ -133,6 +137,11 @@ class TopicController extends controller
             if ($deleted == 0) {
                 DB::table('Topics')->where('Id', '=', $id)->update(['deleted' => 1]);
                 echo "<script type='text/javascript'>alert('Documentation record deleted');</script>";
+
+                $hostname = 'http://' . $request->server->get('HTTP_HOST');
+                $uri = $request->server->get('REQUEST_URI');
+                $redirect = $hostname . Config::get('config', 'root' ).$urlHome ;
+                header("Location: $redirect");
             } else {
                 $this->view("errors/error404");
             }
