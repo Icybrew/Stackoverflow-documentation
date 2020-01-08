@@ -15,7 +15,8 @@ class indexController extends Controller
 
     public function index()
     {
-        $topics = Topic::select('*')->limit(10)->getAll();
+        
+        $topics = Topic::select('*')->where('deleted', '=', '0')->limit(10)->getAll();
         $this->view('index', ["topics" => $topics, "title" => Config::get('config', 'name')]);
     }
 }
