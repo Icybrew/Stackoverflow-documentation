@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ExampleController extends controller
 {
+    public function index()
+    {
+
+    }
     public function show($id)
     {
 
