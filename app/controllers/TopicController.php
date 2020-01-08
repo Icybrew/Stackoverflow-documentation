@@ -19,14 +19,15 @@ class TopicController extends controller
         }
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         {
             $topic = Topic::find($id);
             $docTags = Doctag::all();
 
-            if(empty($topic)){
+            if (empty($topic)) {
                 $this->view("errors/error404");
-            }else{
+            } else {
                 $this->view('topic/edit', [
                     "topic" => $topic,
                     "title" => Config::get('config', 'name'),
@@ -36,7 +37,8 @@ class TopicController extends controller
         }
     }
 
-    public function update($id) {
+    public function update($id)
+    {
         echo "Topic update - $id";
         var_dump($_POST);
     }
@@ -52,13 +54,22 @@ class TopicController extends controller
         var_dump($_POST);
     }
 
-    public function delete()
+    public function delete($id)
     {
-//        DB::table('Topic')->delete('Id')->getAll();
-//        echo ""
+        $topic = Topic::find($id);
 
-         $topic = DB::table('topics')->select('id')->getAll();
-        echo $topic->Id;
+        if (!isset($topic)) {
+            $this->view("errors/error404");
+        } else {
+            $deleted = $topic->deleted;
+
+            if ($deleted == 0) {
+                DB::table('Topics')->where('Id', '=', $id)->update(['deleted' => 1]);
+                echo "<script type='text/javascript'>alert('Documentation record deleted');</script>";
+            } else {
+                $this->view("errors/error404");
+            }
+        }
     }
 }
 
