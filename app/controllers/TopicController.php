@@ -54,15 +54,15 @@ class TopicController extends controller
     {
         $data = $request->request->all();
 
+        if(!isset($data['Title']) || !isset($data['DocTagId']) || !isset($data['RemarksHtml'])){
+            $this->view('errors/error404');
+        }
+
         $query = [
           "Title" => $data['title'],
           "DocTagId" => $data['doctag'],
           "RemarksHtml" => $data['content'],
         ];
-
-        if(!isset($query['Title']) || !isset($query['DocTagId']) || !isset($query['RemarksHtml'])){
-            $this->view('errors/error404');
-        }
 
         if(strlen($query['Title']) <= 0 || strlen($query['DocTagId']) <= 0 || strlen($query['RemarksHtml']) <= 0){
             $this->view('errors/error404');
