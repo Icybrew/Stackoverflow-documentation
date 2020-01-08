@@ -10,9 +10,20 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ExampleController extends controller
 {
-    public function index()
+    public function index($id)
     {
+        $topic = Topic::select('topics.*, doctags.Title AS tag')
+            ->join('doctags', 'doctags.Id', '=', 'topics.DocTagId')
+            ->where('topics.Id', '=', $id)
+            ->where('deleted', '=', 0)
+            ->get();
 
+        if (empty($topic)) {
+            $this->view("errors/error404");
+        } else {
+            $examples = Examples::select('*')->where('DocTopicId', '=', $topic->Id)->getAll();
+            $this->view('example/example', ['topic' => $topic, 'examples' => $examples]);
+        }
     }
     public function show($id)
     {
@@ -31,7 +42,8 @@ class ExampleController extends controller
 
     public function create()
     {
-
+//        $examples = Examples::select(['Id', 'Title'])->orderBy('Title', 'ASC')->getAll();
+//        $this->view('example/create', ["examples" => $examples]);
     }
 
     public function store(Request $request)
