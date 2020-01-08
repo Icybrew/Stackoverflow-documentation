@@ -9,8 +9,6 @@ use App\Topic;
 use App\Core\Config;
 use App\Core\DB;
 use Symfony\Component\HttpFoundation\Request;
-use App\Core\DB;
-
 
 class TopicController extends controller
 {
@@ -91,13 +89,11 @@ class TopicController extends controller
                 $this->view('errors/error404');
             }
 
-
             $id = Topic::insert($query);
             $hostname = 'http://' . $request->server->get('HTTP_HOST');
             $uri = $request->server->get('REQUEST_URI');
             $redirect = $hostname . $uri . '/' . $id;
             header("Location: $redirect");
-
         }
     }
 
