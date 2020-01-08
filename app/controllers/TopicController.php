@@ -106,7 +106,7 @@ class TopicController extends controller
         }
 
         if ($page >= 0) {
-            $topics = Topic::select('topics.*, doctags.tag as tag')->join('doctags', 'doctags.Id', '=', 'topics.DocTagId')->where('topics.title', 'LIKE', "%$search%")->where('deleted', '=', 0)->pagination($perPage, $page);
+            $topics = Topic::select('topics.*, doctags.tag as tag')->join('doctags', 'doctags.Id', '=', 'topics.DocTagId')->where('topics.title', 'LIKE', "%$search%")->where('deleted', '=', 0)->groupBy('topics.Id')->pagination($perPage, $page);
             if (!empty($docTag)) {
                 $topics->where('DocTagId', '=', $docTag->Id);
             }
