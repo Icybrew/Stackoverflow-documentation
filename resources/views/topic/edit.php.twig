@@ -1,11 +1,11 @@
 {% extends "template.php.twig" %}
 
 {% block content %}
+
     <div class="container">
 
         <!-- Topic Edit Form -->
         <form class="mt-5" method="post" action="{{ route('topic.update', {'topic': topic.Id}) }}">
-
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="Title">Title</label>

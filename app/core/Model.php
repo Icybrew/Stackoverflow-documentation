@@ -47,4 +47,8 @@ abstract class Model
     {
         return self::createBuilder(self::getTable())->getAll($type, $argument);
     }
+    public static function update(array $data, $id)
+    {
+        return self::createBuilder(self::getTable())->update($data);
+    }
 }
