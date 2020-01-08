@@ -52,6 +52,25 @@ class TopicController extends controller
         var_dump($_POST);
     }
 
+    public function search()
+    {
+        $category = isset($_GET['category']) ? $_GET['category'] : null;
+        $search = isset($_GET['search']) ? $_GET['search'] : null;
+
+        $perPage = 10;
+        $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+        if ($page >= 0) {
+            $topics = Topic::select('*')->where('Title', 'LIKE', "%$search%")->pagination($perPage, $page)->getAll();
+            $maxItem = Topic::select('COUNT(id) as count')->where('Title', 'LIKE', "%$search%")->get();
+        }
+        if ($page < 0 || $perPage * $page > ceil(($maxItem->count / $perPage)) * $perPage) {
+            $this->view('errors/error404');
+        } else {
+            $this->view('index', ['topics' => $topics, "title" => Config::get('config', 'name'), 'page' => $page, 'search' => $search, 'topicCount' => ($maxItem->count / $perPage)]);
+        }
+    }
+
     public function delete($id)
     {
         $topic = Topic::find($id);
@@ -60,7 +79,6 @@ class TopicController extends controller
             $this->view("errors/error404");
         } else {
             $deleted = $topic->deleted;
-
             if ($deleted == 0) {
                 DB::table('Topics')->where('Id', '=', $id)->update(['deleted' => 1]);
                 echo "<script type='text/javascript'>alert('Documentation record deleted');</script>";

@@ -26,7 +26,7 @@ class QueryBuilder
     protected $result = [];
     protected $prefix = null;
 
-    protected $op = ['=', '!=', '<', '>', '<=', '>=', '<>'];
+    protected $op = ['=', '!=', '<', '>', '<=', '>=', '<>', 'LIKE'];
 
     protected $cache = null;
 
