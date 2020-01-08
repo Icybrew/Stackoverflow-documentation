@@ -21,7 +21,6 @@ class TopicController extends controller
 
     public function edit($id)
     {
-        {
             $topic = Topic::find($id);
             $docTags = Doctag::all();
 
@@ -34,7 +33,6 @@ class TopicController extends controller
                     "docTags" => $docTags
                 ]);
             }
-        }
     }
 
     public function update($id)
@@ -72,4 +70,3 @@ class TopicController extends controller
         }
     }
 }
-
