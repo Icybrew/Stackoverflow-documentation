@@ -94,14 +94,23 @@ class TopicController extends controller
         $perPage = 10;
         $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
-        if ($page >= 0) {
-            $topics = Topic::select('*')->where('Title', 'LIKE', "%$search%")->pagination($perPage, $page)->getAll();
-            $maxItem = Topic::select('COUNT(id) as count')->where('Title', 'LIKE', "%$search%")->get();
+        if (isset($category)) {
+            $docTag = Doctag::select('Id')->where('Tag', '=', $category)->get();
         }
-        if ($page < 0 || $perPage * $page > ceil(($maxItem->count / $perPage)) * $perPage) {
+
+        if ($page >= 0) {
+            $topics = Topic::select('topics.*, doctags.tag as tag')->join('doctags', 'doctags.Id', '=', 'topics.DocTagId')->where('topics.title', 'LIKE', "%$search%")->where('deleted', '=', 0)->pagination($perPage, $page);
+            if (!empty($docTag)) {
+                $topics->where('DocTagId', '=', $docTag->Id);
+            }
+            $topics = $topics->getAll();
+
+            $topicCount = count($topics);
+        }
+        if ($page < 0 || $perPage * $page > ceil(($topicCount / $perPage)) * $perPage) {
             $this->view('errors/error404');
         } else {
-            $this->view('index', ['topics' => $topics, "title" => Config::get('config', 'name'), 'page' => $page, 'search' => $search, 'topicCount' => ($maxItem->count / $perPage)]);
+            $this->view('index', ['topics' => $topics, "title" => Config::get('config', 'name'), 'category' => $category, 'search' => $search, 'page' => $page, 'topicCount' => ($topicCount / $perPage)]);
         }
     }
 
