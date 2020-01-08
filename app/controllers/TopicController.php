@@ -16,7 +16,11 @@ class TopicController extends controller
 {
     public function show($id)
     {
-        $topic = Topic::find($id);
+        $topic = Topic::select('topics.*, doctags.Title AS tag')
+            ->join('doctags','doctags.Id', '=', 'topics.DocTagId')
+            ->where('topics.Id', '=', $id)
+            ->where('deleted', '=', 0)
+            ->get();
 
         if (empty($topic)) {
             $this->view("errors/error404");
@@ -137,7 +141,6 @@ class TopicController extends controller
             if ($deleted == 0) {
                 DB::table('Topics')->where('Id', '=', $id)->update(['deleted' => 1]);
                 echo "<script type='text/javascript'>alert('Documentation record deleted');</script>";
-
                 $hostname = 'http://' . $request->server->get('HTTP_HOST');
                 $uri = $request->server->get('REQUEST_URI');
                 $redirect = $hostname . Config::get('config', 'root' ).$urlHome ;
