@@ -45,7 +45,7 @@ class TopicController extends controller
         $data = $request->request->all();
         $topic = Topic::find($id);
 
-        if(!isset($topic, $data['topicTitle'], $data['topicDocTag'], $data['RemarksHtml']) || strlen($data['topicTitle']) == 0 || strlen($data['topicDocTag']) || strlen($data['RemarksHtml'])){
+        if(!isset($topic, $data['topicTitle'], $data['topicDocTag'], $data['RemarksHtml']) || strlen($data['topicTitle']) == 0 || strlen($data['topicDocTag']) == 0 || strlen($data['RemarksHtml']) == 0){
             $this->view('errors/error404');
         }
 
@@ -55,7 +55,6 @@ class TopicController extends controller
             "RemarksHtml" => $data['RemarksHtml'],
         ];
         Topic::update($query, $id);
-
 
         $hostname = 'http://' . $request->server->get('HTTP_HOST');
         $uri = $request->server->get('REQUEST_URI');
