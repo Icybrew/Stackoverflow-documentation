@@ -14,7 +14,11 @@ class TopicController extends controller
 {
     public function show($id)
     {
-        $topic = Topic::find($id);
+        $topic = Topic::select('topics.*, doctags.Title AS tag')
+            ->join('doctags','doctags.Id', '=', 'topics.DocTagId')
+            ->where('topics.Id', '=', $id)
+            ->where('deleted', '=', 0)
+            ->get();
 
         if (empty($topic)) {
             $this->view("errors/error404");
@@ -122,7 +126,7 @@ class TopicController extends controller
         }
     }
 
-    public function delete($id)
+    public function delete(Request $request, $id)
     {
         $topic = Topic::find($id);
 
@@ -132,7 +136,12 @@ class TopicController extends controller
             $deleted = $topic->deleted;
             if ($deleted == 0) {
                 DB::table('Topics')->where('Id', '=', $id)->update(['deleted' => 1]);
-                echo "<script type='text/javascript'>alert('Documentation record deleted');</script>";
+                //Redirect
+                $uri = $request->server->get('REQUEST_URI');
+                $hostname = 'http://' . $request->server->get('HTTP_HOST');
+                $redirect = $hostname . $uri;
+                $redirect = rtrim($redirect, $id);
+                header("Location: $redirect");
             } else {
                 $this->view("errors/error404");
             }

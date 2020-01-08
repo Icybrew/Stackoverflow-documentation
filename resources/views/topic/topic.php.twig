@@ -12,57 +12,73 @@
                     <div class="cardbox shadow-lg bg-light p-3">
                         <div class="well p-5">
                             <div class="media-body">
-                                <h3 class="media-heading">{{ topic.Title }}</h3>
+                                <div>{{ topic.tag }}</div>
+                                <h2 class="media-heading">{{ topic.Title }}</h2>
                                 <p class="text-muted">{{ topic.CreationDate }}</p>
                                 <!-- Content -->
                                 <table class="table">
                                     <tbody>
+                                    {% if topic.SyntaxHtml is not empty %}
                                     <tr>
                                         <th scope="col">Syntax Html:</th>
                                         <td> {{ topic.SyntaxHtml | raw }}</td>
                                     </tr>
+                                    {% endif %}
+                                    {% if topic.IntroductionMarkown is not empty %}
                                     <tr>
                                         <th scope="col">Introduction Markown:</th>
                                         <td>  {{ topic.IntroductionMarkown }}</td>
                                     </tr>
+                                    {% endif %}
+                                    {% if topic.ParametersHtml is not empty %}
                                     <tr>
                                         <th scope="col">Parameters Html:</th>
                                         <td>{{ topic.ParametersHtml | raw }}</td>
 
                                     </tr>
+                                    {% endif %}
+                                    {% if topic.RemarksHtml is not empty %}
                                     <tr>
                                         <th scope="col">Remarks Html:</th>
                                         <td> {{ topic.RemarksHtml | raw }}</td>
                                     </tr>
+                                    {% endif %}
+                                    {% if topic.SyntaxMarkdown is not empty %}
                                     <tr>
                                         <th scope="col">Syntax Markdown:</th>
                                         <td> {{ topic.SyntaxMarkdown }}</td>
                                     </tr>
+                                    {% endif %}
+                                    {% if topic.ParametersMarkdown is not empty %}
                                     <tr>
                                         <th scope="col">Parameters Markdown:</th>
                                         <td> {{ topic.ParametersMarkdown }}</td>
                                     </tr>
+                                    {% endif %}
+                                    {% if topic.RemarksMarkdown is not empty %}
                                     <tr>
                                         <th scope="col">Remarks Markdown:</th>
                                         <td> {{ topic.RemarksMarkdown }}</td>
                                     </tr>
+                                    {% endif %}
+                                    {% if topic.HelloWorldVersionnsHtml is not empty %}
                                     <tr>
                                         <th scope="col">Hello World Versions Html:</th>
                                         <td> {{ topic.HelloWorldVersionnsHtml | raw }}</td>
                                     </tr>
+                                    {% endif %}
+                                    {% if topic.VersionsJava is not empty %}
                                     <tr>
                                         <th scope="col">Versions Java:</th>
                                         <td> {{ topic.VersionsJava }}</td>
                                     </tr>
+                                    {% endif %}
+                                    {% if topic.VersionsJava is not empty %}
                                     <tr>
                                         <th scope="col">Introduction Html:</th>
                                         <td> {{ topic.IntroductionHtml | raw }}</td>
                                     </tr>
-                                    <tr>
-                                        <th scope="col">Last Edit User Display Name:</th>
-                                        <td> {{ topic.LastEditUserDisplayName }}</td>
-                                    </tr>
-
+                                    {% endif %}
                                     </tbody>
                                 </table>
                                 <div></div>
