@@ -7,7 +7,6 @@ use App\Topic;
 use App\Core\Config;
 use Symfony\Component\HttpFoundation\Request;
 
-
 class TopicController extends controller
 {
     public function show($id)
@@ -22,7 +21,6 @@ class TopicController extends controller
 
     public function edit($id)
     {
-        {
             $topic = Topic::find($id);
             $docTags = Doctag::all();
 
@@ -35,7 +33,6 @@ class TopicController extends controller
                     "docTags" => $docTags
                 ]);
             }
-        }
     }
 
     public function update($id)
@@ -94,10 +91,20 @@ class TopicController extends controller
         }
     }
 
-    public function delete()
+    public function delete($id)
     {
-        var_dump($_POST);
+        $topic = Topic::find($id);
+
+        if (!isset($topic)) {
+            $this->view("errors/error404");
+        } else {
+            $deleted = $topic->deleted;
+            if ($deleted == 0) {
+                DB::table('Topics')->where('Id', '=', $id)->update(['deleted' => 1]);
+                echo "<script type='text/javascript'>alert('Documentation record deleted');</script>";
+            } else {
+                $this->view("errors/error404");
+            }
+        }
     }
-
 }
-
