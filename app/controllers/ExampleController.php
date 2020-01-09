@@ -22,7 +22,7 @@ class ExampleController extends controller
             $this->view("errors/error404");
         } else {
             $examples = Examples::select('*')->where('DocTopicId', '=', $topic->Id)->getAll();
-            $this->view('example/example', ['topic' => $topic, 'examples' => $examples]);
+            $this->view('example/index', ['topic' => $topic, 'examples' => $examples]);
         }
     }
     public function show($id)
