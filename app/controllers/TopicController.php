@@ -10,13 +10,12 @@ use App\Core\Config;
 use App\Core\DB;
 use Symfony\Component\HttpFoundation\Request;
 
-
 class TopicController extends controller
 {
     public function show($id)
     {
         $topic = Topic::select('topics.*, doctags.Title AS tag')
-            ->join('doctags','doctags.Id', '=', 'topics.DocTagId')
+            ->join('doctags', 'doctags.Id', '=', 'topics.DocTagId')
             ->where('topics.Id', '=', $id)
             ->where('deleted', '=', 0)
             ->get();
@@ -31,18 +30,18 @@ class TopicController extends controller
 
     public function edit($id)
     {
-            $topic = Topic::find($id);
-            $docTags = Doctag::all();
+        $topic = Topic::find($id);
+        $docTags = Doctag::all();
 
-            if (empty($topic)) {
-                $this->view("errors/error404");
-            } else {
-                $this->view('topic/edit', [
-                    "topic" => $topic,
-                    "title" => Config::get('config', 'name'),
-                    "docTags" => $docTags
-                ]);
-            }
+        if (empty($topic)) {
+            $this->view("errors/error404");
+        } else {
+            $this->view('topic/edit', [
+                "topic" => $topic,
+                "title" => Config::get('config', 'name'),
+                "docTags" => $docTags
+            ]);
+        }
     }
 
     public function update(Request $request, $id)
@@ -50,7 +49,7 @@ class TopicController extends controller
         $data = $request->request->all();
         $topic = Topic::find($id);
 
-        if(!isset($topic, $data['topicTitle'], $data['topicDocTag'], $data['RemarksHtml']) || strlen($data['topicTitle']) == 0 || strlen($data['topicDocTag']) == 0 || strlen($data['RemarksHtml']) == 0){
+        if (!isset($topic, $data['topicTitle'], $data['topicDocTag'], $data['RemarksHtml']) || strlen($data['topicTitle']) == 0 || strlen($data['topicDocTag']) == 0 || strlen($data['RemarksHtml']) == 0) {
             $this->view('errors/error404');
         }
 
@@ -61,10 +60,7 @@ class TopicController extends controller
         ];
         Topic::update($query, $id);
 
-        $hostname = 'http://' . $request->server->get('HTTP_HOST');
-        $uri = $request->server->get('REQUEST_URI');
-        $redirect = $hostname . $uri . '/';
-        header("Location: $redirect");
+        return redirect()->route('topic.show', ['topic' => $topic->Id]);
     }
 
     public function create()
@@ -77,7 +73,7 @@ class TopicController extends controller
     {
         $data = $request->request->all();
 
-        if(!isset($data['title']) || !isset($data['doctag']) || !isset($data['content'])){
+        if (!isset($data['title']) || !isset($data['doctag']) || !isset($data['content'])) {
             $this->view('errors/error404');
         } else {
             $query = [
@@ -86,17 +82,13 @@ class TopicController extends controller
                 "RemarksHtml" => $data['content'],
             ];
 
-            if(strlen($query['Title']) <= 0 || strlen($query['DocTagId']) <= 0 || strlen($query['RemarksHtml']) <= 0){
+            if (strlen($query['Title']) <= 0 || strlen($query['DocTagId']) <= 0 || strlen($query['RemarksHtml']) <= 0) {
                 $this->view('errors/error404');
             }
 
-
             $id = Topic::insert($query);
-            $hostname = 'http://' . $request->server->get('HTTP_HOST');
-            $uri = $request->server->get('REQUEST_URI');
-            $redirect = $hostname . $uri . '/' . $id;
-            header("Location: $redirect");
 
+            return redirect()->route('topic.show', ['topic' => $id]);
         }
     }
 
@@ -130,19 +122,17 @@ class TopicController extends controller
 
     public function delete($id, Router $router, Request $request)
     {
-        $urlHome=$router::findRouteByName('topic.index')->getUrl();
         $topic = Topic::find($id);
 
-        if (!isset($topic)) {
+        if (empty($topic)) {
             $this->view("errors/error404");
         } else {
             $deleted = $topic->deleted;
+
             if ($deleted == 0) {
                 DB::table('Topics')->where('Id', '=', $id)->update(['deleted' => 1]);
-                $hostname = 'http://' . $request->server->get('HTTP_HOST');
-                $uri = $request->server->get('REQUEST_URI');
-                $redirect = $hostname . Config::get('config', 'root' ).$urlHome ;
-                header("Location: $redirect");
+
+                return redirect()->route('home');
             } else {
                 $this->view("errors/error404");
             }

@@ -2,7 +2,9 @@
 
 namespace App\Core;
 
+use App\Core\Support\Interfaces\Renderable;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class App {
 
@@ -10,6 +12,8 @@ class App {
 
     public function __construct()
     {
+        include 'Support\Helpers\helpers.php';
+
         // Initialising router
         $router = new Router();
 
@@ -53,7 +57,16 @@ class App {
             }
 
             // Calling route function with injected parameters
-            call_user_func_array([$this->current_controller, $functionName], $parameters);
+            $response = call_user_func_array([$this->current_controller, $functionName], $parameters);
+
+            if (isset($response)) {
+                if ($response instanceof Renderable) {
+                    $response->render();
+                } else {
+                    $res = Response::create($response);
+                    $res->send();
+                }
+            }
 
         } else {
             throw new \Error("Class: $className not found!");

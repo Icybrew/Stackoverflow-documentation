@@ -10,9 +10,20 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ExampleController extends controller
 {
-    public function index()
+    public function index($id)
     {
+        $topic = Topic::select('topics.*, doctags.Title AS tag')
+            ->join('doctags', 'doctags.Id', '=', 'topics.DocTagId')
+            ->where('topics.Id', '=', $id)
+            ->where('deleted', '=', 0)
+            ->get();
 
+        if (empty($topic)) {
+            $this->view("errors/error404");
+        } else {
+            $examples = Examples::select('*')->where('DocTopicId', '=', $topic->Id)->getAll();
+            $this->view('example/index', ['topic' => $topic, 'examples' => $examples]);
+        }
     }
     public function show($id)
     {
@@ -53,11 +64,8 @@ class ExampleController extends controller
             }
 
 
-            $id = Examples::insert($query);
-            $hostname = 'http://' . $request->server->get('HTTP_HOST');
-            $uri = $request->server->get('REQUEST_URI');
-            $redirect = $hostname . $uri . '/' . $id;
-            header("Location: $redirect");
+            $exampleId = Examples::insert($query);
+            return redirect()->route('example.show', ['topic' => $id, 'example' => $exampleId]);
 
         }
     }
