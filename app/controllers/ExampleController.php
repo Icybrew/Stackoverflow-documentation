@@ -31,7 +31,7 @@ class ExampleController extends controller
 
     public function create()
     {
-
+        $this->view('example/create');
     }
 
     public function store(Request $request)
