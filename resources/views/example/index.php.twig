@@ -1,0 +1,49 @@
+{% extends "template.php.twig" %}
+
+{% block content %}
+    <div class="container mt-3">
+        <h1 class="modal-title pb-3">{{ topic.Title }} Examples:</h1>
+        <div class="mb-4 d-flex">
+            <div class="ml-auto">
+                <a href="{{ route('example.create', {'topic':topic.Id}) }}">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="createExmple">Create
+                        new example
+                    </button>
+                </a>
+            </div>
+        </div>
+        {% for example in examples %}
+            <table class="table border border-success mb-5">
+                <tbody>
+                <tr>
+                    <th scope="col">Name:</th>
+                    <td>{{ example.Title }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Example:</th>
+                    <td>{{ example.BodyHtml | raw }}</td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        <div class=" d-flex">
+                            <div class="ml-auto">
+                                <a href="{{ route('example.edit', {'topic':topic.Id, 'example': example.Id}) }}">
+                                    <button class="btn btn-outline-success my-2 my-sm-0 btn-sm " type="submit"  id="editExmple">Edit
+                                    </button>
+                                </a>
+                                <form action="{{ route('example.delete', {'topic':topic.Id, 'example': example.Id}) }}" method="post"
+                                      class="d-inline ml-5 mr-5">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn btn-outline-danger my-2 my-sm-0 btn-sm" type="submit" id="deleteExmple">Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        {% endfor %}
+    </div>
+{% endblock %}
