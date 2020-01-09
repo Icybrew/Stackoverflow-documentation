@@ -36,7 +36,7 @@
                                 <form action="{{ route('example.delete', {'topic':topic.Id, 'example': example.Id}) }}"
                                       method="post"
                                       class="d-inline ml-5 mr-5">
-                                    <input type="hidden" name="_method" value="DELETE">
+                                    {{ method('DELETE') }}
                                     <button class="btn btn-outline-danger my-2 my-sm-0 btn-sm" type="submit"
                                             id="deleteExmple">Delete
                                     </button>
