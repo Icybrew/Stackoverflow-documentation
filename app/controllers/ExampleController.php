@@ -29,9 +29,10 @@ class ExampleController extends controller
 
     }
 
-    public function create()
+    public function create($id)
     {
-        $this->view('example/create');
+        $topic=Topic::find($id);
+        $this->view('example/create', ['topic'=>$topic]);
     }
 
     public function store(Request $request)
