@@ -40,15 +40,14 @@ class ExampleController extends controller
 
     }
 
-    public function create()
+    public function create($id)
     {
-//        $examples = Examples::select(['Id', 'Title'])->orderBy('Title', 'ASC')->getAll();
-//        $this->view('example/create', ["examples" => $examples]);
+
     }
 
     public function store(Request $request)
     {
-
+       
     }
 
     public function delete($id)
