@@ -21,7 +21,7 @@ Router::get("/topic/{topic}/examples/{example}", "ExampleController@show")->name
 Router::get("/topic/{topic}/examples/{example}/edit", "ExampleController@edit")->name('example.edit');
 Router::patch("/topic/{topic}/examples/{example}", "ExampleController@update")->name('example.update');
 Router::delete("/topic/{topic}/examples/{example}", "ExampleController@delete")->name('example.delete');
-Router::put("/topi/{topic}/examples", "ExampleController@store")->name('example.store');
+Router::put("/topic/{topic}/examples", "ExampleController@store")->name('example.store');
 
 
 
