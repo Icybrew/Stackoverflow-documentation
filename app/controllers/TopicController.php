@@ -60,10 +60,7 @@ class TopicController extends controller
         ];
         Topic::update($query, $id);
 
-        $hostname = 'http://' . $request->server->get('HTTP_HOST');
-        $uri = $request->server->get('REQUEST_URI');
-        $redirect = $hostname . $uri . '/';
-        header("Location: $redirect");
+        return redirect()->route('topic.show', ['topic' => $topic->Id]);
     }
 
     public function create()
@@ -90,10 +87,8 @@ class TopicController extends controller
             }
 
             $id = Topic::insert($query);
-            $hostname = 'http://' . $request->server->get('HTTP_HOST');
-            $uri = $request->server->get('REQUEST_URI');
-            $redirect = $hostname . $uri . '/' . $id;
-            header("Location: $redirect");
+
+            return redirect()->route('topic.show', ['topic' => $id]);
         }
     }
 
@@ -127,18 +122,17 @@ class TopicController extends controller
 
     public function delete($id, Router $router, Request $request)
     {
-        $urlHome = $router::findRouteByName('topic.index')->getUrl();
         $topic = Topic::find($id);
 
-        if (!isset($topic)) {
+        if (empty($topic)) {
             $this->view("errors/error404");
         } else {
             $deleted = $topic->deleted;
+
             if ($deleted == 0) {
                 DB::table('Topics')->where('Id', '=', $id)->update(['deleted' => 1]);
-                $hostname = 'http://' . $request->server->get('HTTP_HOST');
-                $redirect = $hostname . Config::get('config', 'root') . $urlHome;
-                header("Location: $redirect");
+
+                return redirect()->route('home');
             } else {
                 $this->view("errors/error404");
             }
