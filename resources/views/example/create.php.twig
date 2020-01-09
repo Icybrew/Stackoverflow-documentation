@@ -1,0 +1,29 @@
+{% extends "template.php.twig" %}
+
+{% block content %}
+
+    <div class="mt-5 col-xl-5 col-lg-5 col-md-8 col-sm-10 mx-auto">
+        <h2 class="text-center">Create a new example</h2>
+        <br>
+        <form class="needs-validation" action="{{ route('example.store', {'topic':topic.Id}) }}" method="post">
+            {{ method('PUT') }}
+            <div class="mb-3">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="exampleName" id="exampleName"><b>Title:</b></label>
+                    </div>
+                    <input type="text" class="form-control" name="title" placeholder="Title" required>
+                    <br>
+                </div>
+                <textarea class="form-control" id="exampleBodyHtml" rows="3" name="bodyhtml"
+                          placeholder="Example" required></textarea>
+
+                <br>
+
+                <button class="btn btn-dark" onclick="history.go(-1);"> &#8592; Back</button>
+                <input type="submit" class="btn btn-primary float-right" value="Submit &#8594;">
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
