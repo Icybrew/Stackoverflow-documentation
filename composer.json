@@ -8,7 +8,10 @@
             "App\\Controllers\\": "app\\controllers",
             "App\\Core\\": "app\\core",
             "App\\Core\\Libs\\": "app\\core\\lib",
-            "App\\Core\\Libs\\Database\\": "app\\core\\lib\\database"
+            "App\\Core\\Libs\\Database\\": "app\\core\\lib\\database",
+            "App\\Core\\Support\\": "app\\core\\Support",
+            "App\\Core\\Support\\Helpers\\": "app\\core\\Support\\Helpers",
+            "App\\Core\\Support\\Interfaces\\": "app\\core\\Support\\Interfaces"
         }
     },
     "require": {
