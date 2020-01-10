@@ -19,10 +19,10 @@ class ExampleController extends controller
             ->get();
 
         if (empty($topic)) {
-            $this->view("errors/error404");
+            return view("errors/error404");
         } else {
             $examples = Examples::select('*')->where('DocTopicId', '=', $topic->Id)->getAll();
-            $this->view('example/index', ['topic' => $topic, 'examples' => $examples]);
+            return view('example/index', ['topic' => $topic, 'examples' => $examples]);
         }
     }
     public function show($id)
@@ -35,9 +35,9 @@ class ExampleController extends controller
         $example = Examples::find($id);
 
         if (empty($example)) {
-            $this->view("errors/error404");
+            return view("errors/error404");
         } else {
-            $this->view('example/edit', [
+            return view('example/edit', [
                 "example" => $example,
                 "title" => Config::get('config', 'name'),
             ]);
@@ -49,7 +49,7 @@ class ExampleController extends controller
         $data = $request->request->all();
 
         if (!isset($data['Title']) || !isset($data['BodyHtml'])) {
-            $this->view('errors/error404');
+            return view('errors/error404');
         } else {
             $query = [
                 "Title" => $data['Title'],
@@ -57,7 +57,7 @@ class ExampleController extends controller
             ];
 
             if (strlen($query['Title']) <= 0 || strlen($query['BodyHtml']) <= 0) {
-                $this->view('errors/error404');
+                return view('errors/error404');
             }
 
             $docTopicId = Examples::find($id);
@@ -72,14 +72,14 @@ class ExampleController extends controller
     public function create($id)
     {
         $topic=Topic::find($id);
-        $this->view('example/create', ['topic'=>$topic]);
+        return view('example/create', ['topic'=>$topic]);
     }
 
     public function store(Request $request, $id)
     {
         $data = $request->request->all();
         if(!isset($data['title']) || !isset($data['bodyhtml'])){
-            $this->view('errors/error404');
+            return view('errors/error404');
         } else {
             $query = [
                 "DocTopicId" => $id,
@@ -89,7 +89,7 @@ class ExampleController extends controller
             ];
 
             if(strlen($query['Title']) <= 0 || strlen($query['BodyHtml']) <= 0){
-                $this->view('errors/error404');
+                return view('errors/error404');
             }
 
 

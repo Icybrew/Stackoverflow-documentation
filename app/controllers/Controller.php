@@ -11,7 +11,11 @@ class Controller {
         // Base controller
     }
 
-    protected function view($view, $data = []) {
+
+    /**
+     * @deprecated use view helper function instead
+     */
+    protected function _view($view, $data = []) {
         $view = $view . '.php.twig';
         $viewPath = '../resources/views/' . $view;
         $twigLoader = new \Twig\Loader\FilesystemLoader('../resources/views');
