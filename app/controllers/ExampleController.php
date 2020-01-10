@@ -27,17 +27,46 @@ class ExampleController extends controller
     }
     public function show($id)
     {
-
+        var_dump($id);
     }
 
     public function edit($id)
     {
+        $example = Examples::find($id);
 
+        if (empty($example)) {
+            $this->view("errors/error404");
+        } else {
+            $this->view('example/edit', [
+                "example" => $example,
+                "title" => Config::get('config', 'name'),
+            ]);
+        }
     }
 
     public function update(Request $request, $id)
     {
+        $data = $request->request->all();
 
+        if (!isset($data['Title']) || !isset($data['BodyHtml'])) {
+            $this->view('errors/error404');
+        } else {
+            $query = [
+                "Title" => $data['Title'],
+                "BodyHtml" => $data['BodyHtml'],
+            ];
+
+            if (strlen($query['Title']) <= 0 || strlen($query['BodyHtml']) <= 0) {
+                $this->view('errors/error404');
+            }
+
+            $docTopicId = Examples::find($id);
+            $docTopicId = $docTopicId->{'DocTopicId'};
+
+            Examples::update($query, $id);
+
+            return redirect()->route('example.show', ['topic' => $docTopicId, 'example' => $id]);
+        }
     }
 
     public function create($id)
