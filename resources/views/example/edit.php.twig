@@ -1,0 +1,26 @@
+{% extends "template.php.twig" %}
+
+{% block content %}
+
+    <div class="container">
+
+        <!-- Topic Edit Form -->
+        <form class="mt-5" method="post" action="{{ route('example.update', {'topic':example.DocTopicId , 'example':example.Id}) }}">
+            {{ method('PATCH') }}
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="Title">Name</label>
+                </div>
+                <input type="text" class="form-control" id="Title" name="Title" value="{{ example.Title }}">
+            </div>
+
+            <div class="form-group">
+                <label for="HtmlRemarks">HtmlRemarks:</label>
+                <textarea rows="15" class="form-control" id="HtmlRemarks" name="BodyHtml">{{ example.BodyHtml }}</textarea>
+            </div>
+            <button type="submit" class="float-right btn btn-success">Submit Changes →</button>
+        </form>
+        <button class="btn btn-dark" onclick="history.go(-1);"> ← Back</button>
+
+    </div>
+{% endblock %}
