@@ -21,10 +21,10 @@ class TopicController extends controller
             ->get();
 
         if (empty($topic)) {
-            $this->view("errors/error404");
+            return view("errors/error404");
         } else {
             $examples = Examples::select('*')->where('DocTopicId', '=', $topic->Id)->getAll();
-            $this->view('topic/topic', ['topic' => $topic, 'examples' => $examples]);
+            return view('topic/topic', ['topic' => $topic, 'examples' => $examples]);
         }
     }
 
@@ -34,9 +34,9 @@ class TopicController extends controller
         $docTags = Doctag::all();
 
         if (empty($topic)) {
-            $this->view("errors/error404");
+            return view("errors/error404");
         } else {
-            $this->view('topic/edit', [
+            return view('topic/edit', [
                 "topic" => $topic,
                 "title" => Config::get('config', 'name'),
                 "docTags" => $docTags
@@ -50,7 +50,7 @@ class TopicController extends controller
         $topic = Topic::find($id);
 
         if (!isset($topic, $data['topicTitle'], $data['topicDocTag'], $data['RemarksHtml']) || strlen($data['topicTitle']) == 0 || strlen($data['topicDocTag']) == 0 || strlen($data['RemarksHtml']) == 0) {
-            $this->view('errors/error404');
+            return view('errors/error404');
         }
 
         $query = [
@@ -66,7 +66,7 @@ class TopicController extends controller
     public function create()
     {
         $doctags = Doctag::select(['Id', 'Title'])->orderBy('Title', 'ASC')->getAll();
-        $this->view('topic/create', ["doctags" => $doctags]);
+        return view('topic/create', ["doctags" => $doctags]);
     }
 
     public function store(Request $request)
@@ -74,7 +74,7 @@ class TopicController extends controller
         $data = $request->request->all();
 
         if (!isset($data['title']) || !isset($data['doctag']) || !isset($data['content'])) {
-            $this->view('errors/error404');
+            return view('errors/error404');
         } else {
             $query = [
                 "Title" => $data['title'],
@@ -83,7 +83,7 @@ class TopicController extends controller
             ];
 
             if (strlen($query['Title']) <= 0 || strlen($query['DocTagId']) <= 0 || strlen($query['RemarksHtml']) <= 0) {
-                $this->view('errors/error404');
+                return view('errors/error404');
             }
 
             $id = Topic::insert($query);
@@ -114,9 +114,9 @@ class TopicController extends controller
             $topicCount = $topicCount->get();
         }
         if ($page < 0 || $perPage * $page > ceil(($topicCount->count / $perPage)) * $perPage) {
-            $this->view('errors/error404');
+            return view('errors/error404');
         } else {
-            $this->view('index', ['topics' => $topics, "title" => Config::get('config', 'name'), 'category' => $category, 'search' => $search, 'page' => $page, 'topicCount' => ($topicCount->count / $perPage)]);
+            return view('index', ['topics' => $topics, "title" => Config::get('config', 'name'), 'category' => $category, 'search' => $search, 'page' => $page, 'topicCount' => ($topicCount->count / $perPage)]);
         }
     }
 
@@ -125,7 +125,7 @@ class TopicController extends controller
         $topic = Topic::find($id);
 
         if (empty($topic)) {
-            $this->view("errors/error404");
+            return view("errors/error404");
         } else {
             $deleted = $topic->deleted;
 
@@ -134,7 +134,7 @@ class TopicController extends controller
 
                 return redirect()->route('home');
             } else {
-                $this->view("errors/error404");
+                return view("errors/error404");
             }
         }
     }
