@@ -111,12 +111,17 @@ class TopicController extends controller
             $topics = $topics->getAll();
 
             $topicCount = Topic::select('COUNT(topics.Id) AS count')->join('doctags', 'doctags.Id', '=', 'topics.DocTagId')->where('topics.title', 'LIKE', "%$search%")->where('deleted', '=', 0);
+
+            if (!empty($docTag)) {
+                $topicCount->where('DocTagId', '=', $docTag->Id);
+            }
+
             $topicCount = $topicCount->get();
         }
         if ($page < 0 || $perPage * $page > ceil(($topicCount->count / $perPage)) * $perPage) {
             return view('errors/error404');
         } else {
-            return view('index', ['topics' => $topics, "title" => Config::get('config', 'name'), 'category' => $category, 'search' => $search, 'page' => $page, 'topicCount' => ($topicCount->count / $perPage)]);
+            return view('index', ['topics' => $topics, "title" => Config::get('config', 'name'), 'category' => $category, 'search' => $search, 'page' => $page, 'pageCount' => ceil($topicCount->count / $perPage)]);
         }
     }
 
