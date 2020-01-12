@@ -32,7 +32,7 @@ class Route {
     /**
      * @return mixed
      */
-    public function getName()
+    public function getName() : ?string
     {
         return $this->name;
     }
@@ -52,10 +52,13 @@ class Route {
      */
     public function getUrl(array $parameters = []) : string
     {
-        // Checking if required amount of parameters are given
-        if (count($this->parameters) > count($parameters)) throw new \Error('Not enough parameters given');
-
+        $expected = count($this->parameters);
+        $got = count($parameters);
         $url = $this->url;
+
+        // Checking if required amount of parameters are given
+        if ($expected > $got) throw new \Error(sprintf("Not enough parameters given for route '$this->name', expected $expected, but got $got"));
+
         foreach ($this->parameters as $name => $parameter) {
 
             // Throw error if required parameter not given
@@ -63,6 +66,21 @@ class Route {
 
             // Replace url {name} with supplied parameter
             $url = preg_replace('#\{' . $name . '\}#', $parameters[$name], $url);
+
+            unset($parameters[$name]);
+        }
+
+
+        if (count($parameters) != 0) {
+
+            $url .= '?';
+
+            // Appending rest as GET parameters
+            foreach ($parameters as $name => $parameter) {
+                $url .= $name . '=' . $parameter . '&';
+            }
+
+            $url = rtrim($url, '&');
         }
 
         return $url;

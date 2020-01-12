@@ -43,18 +43,24 @@
             </tr> <!-- A gap after the last table's record-->
             </tbody>
         </table>
-        <div class="d-flex justify-content-center">
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item{{ page<=1 ? ' disabled' }}"><a class="page-link" href="{{ route(topic.search) }}?category={{ category }}&search={{ search }}&page={{ page<=1 ? 1 : page-1 }}">Previous</a>
+        <div class="d-flex justify-content-center align-items-center">
+            <nav aria-label="Page navigation example" class="text-center">
+                <ul class="pagination m-0">
+                    <li class="page-item{{ (page <= 1) ? ' disabled' }}"><a class="page-link" href="{{ route('topic.search', {'category' : category, 'search' : search, 'page' : (page <= 1 ? 1 : page - 1)}) }}">Previous</a>
                     </li>
-
-                    <li class="page-item{{ page>=topicCount ? ' disabled' }}"><a class="page-link" href="{{ route(topic.search) }}?category={{ category }}&search={{ search }}&page={{ page>=topicCount ? topicCount : page+1 }}">Next</a>
+                    {% for i in range((page - 1 <= 1 ? 1 : page - 1), (page + 1 >= pageCount ? pageCount : page + 1)) %}
+                    <li class="page-item"><a class="page-link" href="{{ route('topic.search', {'category' : category, 'search' : search, 'page' : i}) }}">{{ i }}</a></li>
+                    {% endfor %}
+                    <li class="page-item{{ (page >= pageCount) ? ' disabled' }}"><a class="page-link" href="{{ route('topic.search', {'category' : category, 'search' : search, 'page' : (page >= pageCount ? pageCount : page + 1)}) }}">Next</a>
                     </li>
                 </ul>
+                <div class="my-2">
+                    Page {{ page }} - {{ pageCount }}
+                </div>
             </nav>
         </div>
+
         <!-- Footer -->
         <div class="footer navbar-fixed-bottom">
             <a href="{{ route('topic.create') }}">
