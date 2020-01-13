@@ -110,12 +110,11 @@ class ExampleController extends controller
         } else {
             $deleted = $example->deleted;
             $topic = Topic::find($id);
-            $example=Examples::find($id);
 
             if ($deleted == 0) {
                 DB::table('Examples')->where('Id', '=', $id)->update(['deleted' => 1]);
 
-                return redirect()->route('example.index', ['topic', 'topic' => $example->DocTopicId], 'examples');
+                return redirect()->route('example.index', ['topic' => $example->DocTopicId]);
 
             } else {
                 return view('errors/error404');
