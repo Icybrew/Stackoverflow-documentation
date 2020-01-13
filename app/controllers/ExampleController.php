@@ -25,8 +25,6 @@ class ExampleController extends controller
                 ->where('DocTopicId', '=', $topic->Id)
                 ->where('deleted', '=', 0)
                 ->getAll();
-            $this->view('example/index', ['topic' => $topic, 'examples' => $examples]);
-            $examples = Examples::select('*')->where('DocTopicId', '=', $topic->Id)->getAll();
             return view('example/index', ['topic' => $topic, 'examples' => $examples]);
         }
     }
@@ -97,30 +95,30 @@ class ExampleController extends controller
                 return view('errors/error404');
             }
 
-
             $exampleId = Examples::insert($query);
             return redirect()->route('example.show', ['topic' => $id, 'example' => $exampleId]);
 
         }
     }
 
-    public function delete($id, Router $router, Request $request)
+    public function delete($id, Request $request)
     {
         $example = Examples::find($id);
 
         if (empty($example)) {
-            $this->view("errors/error404");
+            return view('errors/error404');
         } else {
             $deleted = $example->deleted;
             $topic = Topic::find($id);
+            $example=Examples::find($id);
 
             if ($deleted == 0) {
                 DB::table('Examples')->where('Id', '=', $id)->update(['deleted' => 1]);
 
-                return redirect()->route('example.index', ['topic', 'topic' => $topic->Id], 'examples');
+                return redirect()->route('example.index', ['topic', 'topic' => $example->DocTopicId], 'examples');
 
             } else {
-                $this->view("errors/error404");
+                return view('errors/error404');
             }
         }
     }
